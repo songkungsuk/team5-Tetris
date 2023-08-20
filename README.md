@@ -19,6 +19,7 @@ canvas.js 테트리스 그림
 #### 2. 블록
    https://ljh3326.tistory.com/14 를 참조하여 
    다음과같이 7개의 모양의 블록을 캔버스에 그릴수있게함
+   블록함수명은 blockTypeOne, blockTypeTwo, blockTypeThree, blockTypeFour, blockTypeFive, blockTypeSix, blockTypeSeven 이렇게 하면되요
 
 #### 3. 블록이 움직이고 인지되는 2차원배열
    가로 18개
