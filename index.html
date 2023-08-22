@@ -1,18 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team 5 테트리스</title>
-    <link rel="stylesheet" href="/css/test.css">
 </head>
+
 <body>
     <h1>Team 5</h1>
     <h2>TETRIS</h2>
-    <canvas width="400" height="600" id="front"></canvas>
+
     <script src="/js/block.js"></script>
     <script src="/js/canvas.js"></script>
     <script src="/js/function.js"></script>
+    <div id="game-container"> <!-- 게임 요소를 감싸는 메인 컨테이너 -->
+
+        <div class="container" id="canvas-container"> <!-- Tetris 게임 캔버스를 포함하는 컨테이너 -->
+            <canvas id="tetrisCanvas"></canvas> <!-- Tetris 게임 캔버스 요소 -->
+
+            <div class="container" id="score-container"> <!-- 점수 및 캔버스를 포함하는 컨테이너 -->
+                <canvas class="container" id="block-container"></canvas>
+                <h2>Score</h2> <!-- "Score" 텍스트 헤더 (하얀색) -->
+                <h2 id="score">0</h2> <!-- 점수를 표시하는 단락 요소 (초기값 0, 하얀색) -->
+
+                <br>
+                <br>
+                <div class="direction-keys"> <!-- 조작 방향키를 포함하는 컨테이너 -->
+                    <div></div>
+                    <div class="rotate-key">
+                        <span>↻</span> <!-- 시계방향 화살표로 보이는 회전 키 -->
+                    </div>
+                    <div></div>
+                    <div class="direction-key">←</div> <!-- 왼쪽 방향키 -->
+                    <div class="direction-key">↓</div> <!-- 아래쪽 방향키 -->
+                    <div class="direction-key">→</div> <!-- 오른쪽 방향키 -->
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
