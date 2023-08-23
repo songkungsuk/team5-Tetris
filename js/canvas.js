@@ -1,15 +1,9 @@
-
-const context = canvas.getContext('2d');//캔버스 그리는거 타입
-const width = canvas.getAttribute('width'); //#front의 width 값
-const height = canvas.getAttribute('height'); //#front의 height 값
-context.fillStyle = "gray";
-context.fillRect(0, 0, width, height);
 const canvas = document.getElementById("tetrisCanvas");
 const context = canvas.getContext("2d");
 
 const cellSize = 40;
-const rows = 20;
-const cols = 10;
+const rows = 48;
+const cols = 18;
 
 canvas.width = cols * cellSize;
 canvas.height = rows * cellSize;
@@ -17,7 +11,7 @@ canvas.height = rows * cellSize;
 let score = 0;
 
 // Tetris 블록의 형태와 색상을 나타내는 배열
-const tetrisBlocks = [
+const tetrisBlocks = [ //이거 알고가져온거맞죠 ?
     { color: "#FFD700", shape: [[1, 1, 1, 1]] }, // I 블록
     { color: "#FF4500", shape: [[1, 1, 1], [0, 0, 1]] }, // L 블록
     // 다른 블록 형태도 추가할 수 있음
@@ -68,7 +62,7 @@ function moveBlockDown() {
     currentBlock.y++;
 }
 
-function rotateBlock() {
+function rotateBlock() { //readme.md 파일 안본게..느껴지는..
     const originalShape = currentBlock.shape;
     const rotatedShape = [];
     for (let col = 0; col < originalShape[0].length; col++) {
@@ -81,7 +75,7 @@ function rotateBlock() {
     currentBlock.shape = rotatedShape;
 }
 
-function handleKeyPress(event) {
+function handleKeyPress(event) {  
     switch (event.keyCode) {
         case 37: // Left arrow
             moveBlockLeft();
