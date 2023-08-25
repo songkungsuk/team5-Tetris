@@ -13,8 +13,6 @@
             background-color: #f0f0f0;
         }
 
-
-
         h2 {
             color: #f0f0f0;
 
@@ -26,9 +24,6 @@
             align-items: center;
 
         }
-
-
-
 
         .container {
             display: flex;
@@ -47,10 +42,6 @@
             background-color: black;
         }
 
-
-
-
-
         #score-container {
             display: flex;
 
@@ -64,7 +55,6 @@
 
         }
 
-
         #block-container {
             width: 150px;
             height: 250px;
@@ -73,10 +63,6 @@
             margin-bottom: auto;
             margin-top: auto;
         }
-
-
-
-
 
         .direction-keys {
             display: grid;
