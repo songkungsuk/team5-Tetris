@@ -1,73 +1,74 @@
-
-const context = canvas.getContext('2d');//캔버스 그리는거 타입
-const width = canvas.getAttribute('width'); //#front의 width 값
-const height = canvas.getAttribute('height'); //#front의 height 값
-context.fillStyle = "gray";
-context.fillRect(0, 0, width, height);
+// Canvas 요소와 2D 그리기 컨텍스트를 설정
 const canvas = document.getElementById("tetrisCanvas");
 const context = canvas.getContext("2d");
 
-const cellSize = 40;
-const rows = 20;
-const cols = 10;
+// 각 셀의 크기와 행, 열의 개수를 정의합니다.
+const cellSize = 40; // 각 블록이 차지하는 픽셀 크기
+const rows = 20; // 게임 보드의 행 수
+const cols = 10; // 게임 보드의 열 수
 
-canvas.width = cols * cellSize;
-canvas.height = rows * cellSize;
-
+// 현재 점수를 나타내는 변수입니다.
 let score = 0;
 
-// Tetris 블록의 형태와 색상을 나타내는 배열
+// Tetris 블록의 모양과 색상을 정의하는 배열
 const tetrisBlocks = [
     { color: "#FFD700", shape: [[1, 1, 1, 1]] }, // I 블록
     { color: "#FF4500", shape: [[1, 1, 1], [0, 0, 1]] }, // L 블록
-    // 다른 블록 형태도 추가할 수 있음
+    // 다른 블록 형태도 추가 가능
 ];
 
-// 현재 Tetris 블록의 상태와 위치를 나타내는 변수
+// 현재 Tetris 블록의 상태와 위치를 저장하는 객체
 let currentBlock = {
-    x: 0,
-    y: 0,
-    shape: tetrisBlocks[0].shape,
-    color: tetrisBlocks[0].color
+    x: 0, // 현재 블록의 x 좌표
+    y: 0, // 현재 블록의 y 좌표
+    shape: tetrisBlocks[0].shape, // 현재 블록의 모양
+    color: tetrisBlocks[0].color // 현재 블록의 색상
 };
 
+// 주어진 위치(x, y)와 색상으로 셀을 그리는 함수
 function drawCell(x, y, color) {
-    context.fillStyle = color;
-    context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-    context.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    context.fillStyle = color; // 사용할 색상 설정
+    context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize); // 색칠된 사각형 그리기
+    context.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize); // 사각형 테두리 그리기
 }
 
+// 게임 보드를 그리는 함수입니다.
 function drawBoard() {
     for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
-            drawCell(x, y, "#f0f0f0");
+            drawCell(x, y, "#f0f0f0"); // 회색 배경의 셀을 그림
         }
     }
 }
 
+// 현재 블록을 그리는 함수입니다.
 function drawBlock() {
     const { shape, x, y, color } = currentBlock;
     for (let row = 0; row < shape.length; row++) {
         for (let col = 0; col < shape[row].length; col++) {
             if (shape[row][col]) {
-                drawCell(x + col, y + row, color);
+                drawCell(x + col, y + row, color); // 블록의 모양과 색상으로 셀을 그림
             }
         }
     }
 }
 
+// 블록을 왼쪽으로 이동시키는 함수
 function moveBlockLeft() {
     currentBlock.x--;
 }
 
+// 블록을 오른쪽으로 이동시키는 함수
 function moveBlockRight() {
     currentBlock.x++;
 }
 
+// 블록을 아래로 이동시키는 함수
 function moveBlockDown() {
     currentBlock.y++;
 }
 
+// 블록을 회전시키는 함수
 function rotateBlock() {
     const originalShape = currentBlock.shape;
     const rotatedShape = [];
@@ -81,49 +82,45 @@ function rotateBlock() {
     currentBlock.shape = rotatedShape;
 }
 
+// 키 입력을 처리하는 함수입니다.
 function handleKeyPress(event) {
     switch (event.keyCode) {
-        case 37: // Left arrow
+        case 37: // 왼쪽 화살표
             moveBlockLeft();
             break;
-        case 39: // Right arrow
+        case 39: // 오른쪽 화살표
             moveBlockRight();
             break;
-        case 40: // Down arrow
+        case 40: // 아래 화살표
             moveBlockDown();
             break;
-        case 38: // Up arrow
+        case 38: // 위 화살표
+        case 90: // 'z' 키
+        case 67: // 'c' 키
             rotateBlock();
             break;
-        case 90: // 'z' key
-            rotateBlock();
+        case 16: // Shift 키
+            // 블록 저장 기능 추가 가능
             break;
-        case 67: // 'c' key
-            rotateBlock();
-            break;
-        case 16: // Shift key
-            // 블록 저장 기능 추가
-            break;
-        case 32: // Space bar
-            // 바로 떨어지게 하기 기능 추가
+        case 32: // 스페이스 바
+            // 블록을 한 번에 아래로 내리는 기능 추가 가능
             break;
     }
 }
 
+// 키 입력 이벤트를 감지하여 처리하는 리스너를 등록
 document.addEventListener("keydown", handleKeyPress);
 
+// 게임 루프 함수입니다.
 function gameLoop() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    drawBoard();
-    drawBlock();
-    // 게임 루프 추가
-    requestAnimationFrame(gameLoop);
+    context.clearRect(0, 0, canvas.width, canvas.height); // 캔버스를 지웁
+    drawBoard(); // 게임 보드를 그립니다.
+    drawBlock(); // 현재 블록을 그립니다.
+    requestAnimationFrame(gameLoop); // 다음 프레임을 요청하여 게임 루프를 유지
 }
 
+// 게임 루프를 시작합니다.
 gameLoop();
-
-
-
 
 
 
