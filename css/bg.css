@@ -2,15 +2,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 50vh;
             margin: 0;
+            margin-top: 12%;
             /*  background-image: url("img/space.jpg");
             background-repeat: no-repeat;
-            background-size: cover;*/
+            background-size: cover;
+            ???????????????????????????
+            */
             background-color: #f0f0f0;
         }
-
-
 
         h2 {
             color: #f0f0f0;
@@ -23,9 +24,6 @@
             align-items: center;
 
         }
-
-
-
 
         .container {
             display: flex;
@@ -44,10 +42,6 @@
             background-color: black;
         }
 
-
-
-
-
         #score-container {
             display: flex;
 
@@ -61,7 +55,6 @@
 
         }
 
-
         #block-container {
             width: 150px;
             height: 250px;
@@ -70,10 +63,6 @@
             margin-bottom: auto;
             margin-top: auto;
         }
-
-
-
-
 
         .direction-keys {
             display: grid;
