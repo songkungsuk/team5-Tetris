@@ -22,7 +22,7 @@ function stackedBoardArray() {
 }
 
 function nextBlockBoardArray() {
-    // 세로 25칸, 가로 10칸 테트리스 배열
+    // 세로 20칸, 가로 10칸 테트리스 배열
     for (let height = 0; height < 20; height++) {
         nextBlockBoard[height] = [];
         for (let width = 0; width < 10; width++) {
@@ -118,7 +118,7 @@ function handleKeyPress(event) {
             break;
         case 32: // Space bar
             // 바로 떨어지게 하기 기능 추가
-            move_y = 26;
+            move_y = 24;
             break;
     }
 }
@@ -169,9 +169,7 @@ function initNextBlockCanvas() {
 }
 //다음에 보여줄 블력 그리기
 function drawNextBlock() {
-
     nextBlockContext.fillStyle = "yellow";
-    
     for (let x = 0; x < nextwidthBlockCount; x++) {
         for (let y = 0; y < nextheightBlockCount; y++) {
             if (nextBlockBoard[x][y]) {
@@ -206,3 +204,34 @@ function showNextBlock() {
     nextBlockBoardArray();
 }
 
+function getRandAndInitMoveY() {
+    blockIndex.push(nextBlockGenerator.getNextBlock()); //랜덤수 생성해서 인덱스 배열에 넣기
+    blockIndex.shift(); // 배열의 첫번째 요소 제거
+    randomBlock = chooseBlock(blockIndex[0]); //랜덤블록은 첫번째를 제거한 1번째 인덱스가 되는것
+    move_y = 0;
+}
+
+// 블럭 없에고 점수 올리기
+function getBlockScore() {
+    for (let y = 0; y < heightBlockCount; y++) {
+        for (let x = 0; x < widthBlockCount; x++) {
+            if (stackedBoard[x][y]) { //해당하는 블럭이 채워져있으면
+                countTrue++;  //한줄에있는 블럭개수는늘어난다
+                if (countTrue == widthBlockCount) { // x축이 전부 채워지면 widthBlockCount는 12가 됨
+                    for (let z = 0; z < widthBlockCount; z++) { //z를 x좌표라고 생각하면 이해할수있음
+                        stackedBoard[z][y] = false; //블럭없엠
+                        for (let j = y; j > 0; j--) { //j를 y좌표라고 생각하기 y좌표는 클수록 아래 작을수록 위라서 j--로했음
+                            stackedBoard[z][j] = stackedBoard[z][j - 1]; //위에있는 블럭들 다 아래로 끌어옴 -1 인이유는 y축이 아래로 갈수록 증가하기 때문에 위에있는배열은 수가작다
+                        }
+                    }
+                    score += 1000; // 점수올리기
+                    document.querySelector('#score').innerHTML = score;
+                }
+            }
+            else {
+                countTrue = 0;
+                continue;
+            }
+        }
+    }
+}
