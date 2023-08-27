@@ -99,7 +99,10 @@ function handleKeyPress(event) {
         case 40: // Down arrow
             if (move_y < 26) {
                 // 맨 밑에 닿으면 안 내려가게 하려고
-                move_y++; //내려갈때는 y가 늘어가야되므로 y++
+                if (move_y >= heightBlockCount - (controll_y + 1 + stacked_height + 2)) {
+                    break;
+                }
+                move_y++;
             }
             break;
         case 38: // Up arrow
@@ -127,7 +130,7 @@ function handleKeyPress(event) {
             break;
         case 32: // Space bar
             // 바로 떨어지게 하기 기능 추가
-            move_y = heightBlockCount - (controll_y + 1 + stacked_height+2);
+            move_y = heightBlockCount - (controll_y + 1 + stacked_height + 2);
             break;
     }
 }
@@ -146,7 +149,6 @@ function initCanvas() {
 function drawBlock(x, y) {
     //원하는 블럭에 색칠하기
     tetrisBoard[x][y] = true;
-
 }
 // 조종할 블럭과 쌓인 블럭을 그려주는 함수
 function drawBlocks() {
@@ -207,7 +209,7 @@ function showNextBlock() {
     nextBlockBoard.length = 0;
     nextBlockBoardArray();
 }
-//블럭 인덱스 배열에 미리 넣어주면서 새로 나올블록도 나오게 해줌 
+//블럭 인덱스 배열에 미리 넣어주면서 새로 나올블록도 나오게 해줌
 function getRandAndInitMoveY() {
     blockIndex.push(nextBlockGenerator.getNextBlock()); //랜덤수 생성해서 인덱스 배열에 넣기
     blockIndex.shift(); // 배열의 첫번째 요소 제거
