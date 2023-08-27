@@ -1,7 +1,6 @@
 let tetrisBoard = []; //내가 조종할 테트리스
 let stackedBoard = []; // 쌓인 테트리스 공간
 let nextBlockBoard = []; // 다음에 보여줄 블럭
-let stacked_height = 0; // 쌓여있는 테트리스중 가장 높이쌓인위치
 function tetrisBoardArray() {
     // 세로 29칸, 가로 12칸 테트리스 배열
     for (let height = 0; height < 29; height++) {
@@ -99,10 +98,7 @@ function handleKeyPress(event) {
         case 40: // Down arrow
             if (move_y < 26) {
                 // 맨 밑에 닿으면 안 내려가게 하려고
-                if (move_y >= heightBlockCount - (controll_y + 1 + stacked_height + 2)) {
-                    break;
-                }
-                move_y++;
+                move_y++; //내려갈때는 y가 늘어가야되므로 y++
             }
             break;
         case 38: // Up arrow
@@ -130,7 +126,7 @@ function handleKeyPress(event) {
             break;
         case 32: // Space bar
             // 바로 떨어지게 하기 기능 추가
-            move_y = heightBlockCount - (controll_y + 1 + stacked_height + 2);
+            move_y = 24;
             break;
     }
 }
@@ -149,17 +145,37 @@ function initCanvas() {
 function drawBlock(x, y) {
     //원하는 블럭에 색칠하기
     tetrisBoard[x][y] = true;
+
 }
 // 조종할 블럭과 쌓인 블럭을 그려주는 함수
 function drawBlocks() {
-    //배열이 ture인지 false인지 확인하여 블록의 유무정함
     for (let x = 0; x < widthBlockCount; x++) {
         for (let y = 0; y < heightBlockCount; y++) {
             if (tetrisBoard[x][y]) {
-                //내가 움직이는것
-                context.fillStyle = "yellow";
-            } else if (stackedBoard[x][y]) {
+                switch (blockIndex[0]) {
+                    case 1: // 블럭 1의 색상
+                        context.fillStyle = "#a2ddf3";
+                        break;
+                    case 2: // 블럭 2의 색상
+                        context.fillStyle = "#f3a2ca";
+                        break;
+                    case 3: // 블럭 3의 색상
+                        context.fillStyle = "#a2f3db";
+                        break;
+                    case 4: // 블럭 4의 색상
+                        context.fillStyle = "#56a6ff";
+                        break;
+                    case 5: // 블럭 5의 색상
+                        context.fillStyle = "#f3c8a2";
+                        break;
+                    case 6: // 블럭 6의 색상
+                        context.fillStyle = "#eaa2f3";
+                        break;
+                     case 7: // 블럭 7의 색상
+                        context.fillStyle ="#a2a6f3";
+                   }
                 //쌓인블록
+            } else if (stackedBoard[x][y]) {
                 context.fillStyle = "#c3c3c3";
             } else {
                 context.fillStyle = "black";
@@ -181,7 +197,37 @@ function initNextBlockCanvas() {
 }
 //다음에 보여줄 블력 그리기
 function drawNextBlock() {
-    nextBlockContext.fillStyle = "yellow";
+        switch (blockIndex[1]) {
+            case 1: // 블럭 1의 색상
+                nextBlockContext.fillStyle = "#a2ddf3";
+                break;
+            case 2: // 블럭 2의 색상
+                nextBlockContext.fillStyle = "#f3a2ca";
+                break;
+            case 3: // 블럭 3의 색상
+                nextBlockContext.fillStyle = "#a2f3db";
+                break;
+            case 4: // 블럭 4의 색상
+                nextBlockContext.fillStyle = "#56a6ff";
+                break;
+            case 5: // 블럭 5의 색상
+                nextBlockContext.fillStyle = "#f3c8a2";
+                break;
+            case 6: // 블럭 6의 색상
+                nextBlockContext.fillStyle = "#eaa2f3";
+                break;
+            case 7: // 블럭 7의 색상
+                nextBlockContext.fillStyle = "#a2a6f3";
+                break;
+        }
+        for (let x = 0; x < nextwidthBlockCount; x++) {
+            for (let y = 0; y < nextheightBlockCount; y++) {
+                if (nextBlockBoard[x][y]) {
+                    nextBlockContext.fillRect(nextBoarderWidth * x + nextBlocksize * x, nextBoarderWidth * y + nextBlocksize * y, nextBlocksize, nextBlocksize);
+                }
+            }
+        }
+    }
     for (let x = 0; x < nextwidthBlockCount; x++) {
         for (let y = 0; y < nextheightBlockCount; y++) {
             if (nextBlockBoard[x][y]) {
@@ -189,7 +235,7 @@ function drawNextBlock() {
             }
         }
     }
-}
+
 //블력그리기
 function drawNextBlockOne(x, y) {
     if (blockIndex[1] == 4) {
@@ -209,7 +255,7 @@ function showNextBlock() {
     nextBlockBoard.length = 0;
     nextBlockBoardArray();
 }
-//블럭 인덱스 배열에 미리 넣어주면서 새로 나올블록도 나오게 해줌
+//블럭 인덱스 배열에 미리 넣어주면서 새로 나올블록도 나오게 해줌 
 function getRandAndInitMoveY() {
     blockIndex.push(nextBlockGenerator.getNextBlock()); //랜덤수 생성해서 인덱스 배열에 넣기
     blockIndex.shift(); // 배열의 첫번째 요소 제거
