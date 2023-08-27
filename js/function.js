@@ -145,6 +145,7 @@ function initCanvas() {
 function drawBlock(x, y) {
     //원하는 블럭에 색칠하기
     tetrisBoard[x][y] = true;
+
 }
 // 조종할 블럭과 쌓인 블럭을 그려주는 함수
 function drawBlocks() {
@@ -205,7 +206,7 @@ function showNextBlock() {
     nextBlockBoard.length = 0;
     nextBlockBoardArray();
 }
-
+//블럭 인덱스 배열에 미리 넣어주면서 새로 나올블록도 나오게 해줌 
 function getRandAndInitMoveY() {
     blockIndex.push(nextBlockGenerator.getNextBlock()); //랜덤수 생성해서 인덱스 배열에 넣기
     blockIndex.shift(); // 배열의 첫번째 요소 제거

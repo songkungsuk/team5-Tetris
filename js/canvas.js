@@ -23,6 +23,7 @@ let rotate = 0; //회전
 let rotate_num = Math.abs(rotate) % 4; //테트리스 회전 숫자
 let overlap_y = 0; // 블럭이 겹쳤을때 반환하는값 그래야지 블럭을 한번에 내림
 let controll_x = 0; // 오른쪽으로 빠져나가지 않게하는 변수
+let controll_x_min = 2; // 왼쪽으로 빠져나가지 않게하는 변수
 let controll_y = 0; // 높이가 높은 블럭을 내렸을때 맨밑바닥인경우 조절해줌
 let blockLocationArray_x = []; //블럭의 x좌표 값들 저장하는배열
 let blockLocationArray_y = []; //블럭의 y좌표 값들 저장하는배열
@@ -70,14 +71,14 @@ const test = setInterval(function () {
 
     //x와 y의 최대값 뽑는 것
     for (let num = 0; num < blockLocationArray_x.length; num++) {
-        if (controll_x < blockLocationArray_x[num]) {
+        if (controll_x < blockLocationArray_x[num]) { //블록의 오른쪽 최대좌표
             controll_x = blockLocationArray_x[num];
         }
-
-        if (controll_y < blockLocationArray_y[num]) {
+        if (controll_y < blockLocationArray_y[num]) { // 블록의 아래 최대 좌표
             controll_y = blockLocationArray_y[num];
         }
     }
+
 
     //-----------------------------------------------------
     drawBlocks(); //이게 쌓인블록과 내가 조종할 블록을 그려주는 함수
