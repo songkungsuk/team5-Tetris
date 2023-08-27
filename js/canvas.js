@@ -1,4 +1,3 @@
-
 //--------------------------------------블럭미리보여주는곳 -----------------------------------------------
 const nextBlockCanvas = document.getElementById("block-container"); //블럭 미리보여줄것
 const nextBlockContext = nextBlockCanvas.getContext("2d"); // //캔버스 그리는거 타입
@@ -31,11 +30,13 @@ let countTrue = 0; // 테트리스 한줄이 전부 채워졋는지 확인하는
 let score = 0; //점수
 //테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요
 
-
-
-
 //--------------여기가 테트리스 실행부 나중에 main.js로 뺄예정
+let isUpKeyPressed = false;
 document.addEventListener("keydown", handleKeyPress);
+// 위 방향키에서 손을 뗐을때 false로 바꿔서 정상 속도로 내려가게함
+document.addEventListener("keyup", function (e) {
+    isUpKeyPressed = false;
+});
 let randomBlock = chooseBlock(blockIndex[0]); //function.js에서 블럭랜덤으로 선택
 const test = setInterval(function () {
     tetrisBoardArray(); //배열초기화
@@ -43,13 +44,12 @@ const test = setInterval(function () {
     initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
     showNextBlock(); // 다음블럭보여줌
     getBlockScore(); //블럭이 한줄이 채워져있는지 확인하기 채워졌으면 지움
-    
+
     rotate_num = Math.abs(rotate) % 4; //블록회전시키는것 0~3값만나옵니다
     controll_x = 0; // 오른쪽으로 빠져나가지 않게하는 변수
     controll_y = 0; // 높이가 높은 블럭을 내렸을때 맨밑바닥인경우 조절해줌
     blockLocationArray_x = []; //블럭의 x좌표 값들 저장하는배열
     blockLocationArray_y = []; //블럭의 y좌표 값들 저장하는배열
-
 
     // 블럭을 그릴때마다 체크해야함 블럭이 겹치는지 안겹치는지 - 블럭한개가 닿앗을때
     for (let i = 0; i < randomBlock[0].length; i++) {
@@ -95,5 +95,4 @@ const test = setInterval(function () {
     }
     move_y++; //블럭내림
     tetrisBoard.length = 0; //배열값삭제
-
 }, 100);

@@ -55,12 +55,10 @@ class NextBlock {
     }
 }
 const nextBlockGenerator = new NextBlock();
-let blockIndex = []
+let blockIndex = [];
 for (let i = 0; i < 3; i++) {
     blockIndex.push(nextBlockGenerator.getNextBlock());
 }
-
-
 
 //1~7 숫자를 랜덤으로 생성된것에 따라 블럭을 골라서 리턴
 function chooseBlock(num) {
@@ -104,8 +102,18 @@ function handleKeyPress(event) {
             }
             break;
         case 38: // Up arrow
-            // 누르는 간격이 짧으면 작동이 안되게 해서 위로 올라가는게 아니라 아래로 내려가게 할 수 있을것 같은데
-            move_y--; //느리게 내릴때는 위쪽방향키
+            // 위 방향키가 안 눌린 상태면 눌린 상태로 바꾸고, 눌린 상태면 slowDown() 실행해서 느려지게 함
+            if (!isUpKeyPressed) {
+                isUpKeyPressed = true;
+                // 0.2초마다 1칸씩 내려가게 함
+                let interval = setInterval(function () {
+                    if (isUpKeyPressed) {
+                        move_y--;
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 200); // 더 천천히 하거나 빠르게 할거면 이거 숫자 바꾸면 됨
+            }
             break;
         case 90: // 'z' key
             rotate--;
@@ -173,23 +181,17 @@ function drawNextBlock() {
     for (let x = 0; x < nextwidthBlockCount; x++) {
         for (let y = 0; y < nextheightBlockCount; y++) {
             if (nextBlockBoard[x][y]) {
-                nextBlockContext.fillRect(
-                    nextBoarderWidth * x + nextBlocksize * x,
-                    nextBoarderWidth * y + nextBlocksize * y,
-                    nextBlocksize,
-                    nextBlocksize);
+                nextBlockContext.fillRect(nextBoarderWidth * x + nextBlocksize * x, nextBoarderWidth * y + nextBlocksize * y, nextBlocksize, nextBlocksize);
             }
-
         }
     }
 }
 //블력그리기
 function drawNextBlockOne(x, y) {
     if (blockIndex[1] == 4) {
-        nextBlockBoard[x + 2][y + 3] = true;    //ㅁ 모양일때 가운데로 안가가지고 이렇게했습니다
-    }
-    else {
-        nextBlockBoard[x + 1][y + 3] = true;  // 그외는 다이렇게 무지성 하드코딩;;
+        nextBlockBoard[x + 2][y + 3] = true; //ㅁ 모양일때 가운데로 안가가지고 이렇게했습니다
+    } else {
+        nextBlockBoard[x + 1][y + 3] = true; // 그외는 다이렇게 무지성 하드코딩;;
     }
 }
 // 블럭보여주기
@@ -215,20 +217,23 @@ function getRandAndInitMoveY() {
 function getBlockScore() {
     for (let y = 0; y < heightBlockCount; y++) {
         for (let x = 0; x < widthBlockCount; x++) {
-            if (stackedBoard[x][y]) { //해당하는 블럭이 채워져있으면
-                countTrue++;  //한줄에있는 블럭개수는늘어난다
-                if (countTrue == widthBlockCount) { // x축이 전부 채워지면 widthBlockCount는 12가 됨
-                    for (let z = 0; z < widthBlockCount; z++) { //z를 x좌표라고 생각하면 이해할수있음
+            if (stackedBoard[x][y]) {
+                //해당하는 블럭이 채워져있으면
+                countTrue++; //한줄에있는 블럭개수는늘어난다
+                if (countTrue == widthBlockCount) {
+                    // x축이 전부 채워지면 widthBlockCount는 12가 됨
+                    for (let z = 0; z < widthBlockCount; z++) {
+                        //z를 x좌표라고 생각하면 이해할수있음
                         stackedBoard[z][y] = false; //블럭없엠
-                        for (let j = y; j > 0; j--) { //j를 y좌표라고 생각하기 y좌표는 클수록 아래 작을수록 위라서 j--로했음
+                        for (let j = y; j > 0; j--) {
+                            //j를 y좌표라고 생각하기 y좌표는 클수록 아래 작을수록 위라서 j--로했음
                             stackedBoard[z][j] = stackedBoard[z][j - 1]; //위에있는 블럭들 다 아래로 끌어옴 -1 인이유는 y축이 아래로 갈수록 증가하기 때문에 위에있는배열은 수가작다
                         }
                     }
                     score += 1000; // 점수올리기
-                    document.querySelector('#score').innerHTML = score;
+                    document.querySelector("#score").innerHTML = score;
                 }
-            }
-            else {
+            } else {
                 countTrue = 0;
                 continue;
             }
