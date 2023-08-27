@@ -1,3 +1,15 @@
+
+//--------------------------------------블럭미리보여주는곳 -----------------------------------------------
+const nextBlockCanvas = document.getElementById("block-container"); //블럭 미리보여줄것
+const nextBlockContext = nextBlockCanvas.getContext("2d"); // //캔버스 그리는거 타입
+const nextBoarderWidth = 1;
+const nextBlocksize = 16;
+const nextwidthBlockCount = 6;
+const nextheightBlockCount = 20;
+nextBlockCanvas.width = 100;
+//-------------------------------------------------------------------------------------------------------
+
+// -------------------------------------블럭떨어지는곳 --------------------------------------------------
 const canvas = document.getElementById("tetrisCanvas"); //캔버스 객체 자체
 const context = canvas.getContext("2d"); //캔버스 그리는거 타입
 const borderWidth = 1; //테트리스 블럭마다 띄우는정도
@@ -16,52 +28,22 @@ let controll_y = 0; // 높이가 높은 블럭을 내렸을때 맨밑바닥인�
 let blockLocationArray_x = []; //블럭의 x좌표 값들 저장하는배열
 let blockLocationArray_y = []; //블럭의 y좌표 값들 저장하는배열
 // let score = 0; 얘는 나중에씀.
-//블럭 테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요
-function initCanvas() {
-    // 배경 그리기
-    context.fillStyle = "black"; //캔버스 블럭 색깔 종류
-    for (let x = 0; x < widthBlockCount; x++) {
-        //가로세로 블럭수만큼 캔버스에 블럭그려넣기
-        for (let y = 0; y < heightBlockCount; y++) {
-            context.fillRect(0, 0, canvas.width, canvas.height);
-        }
-    }
-}
-
-function drawBlock(x, y) {
-    //원하는 블럭에 색칠하기
-    tetrisBoard[x][y] = true;
-}
-
-function drawBlocks() {
-    //배열이 ture인지 false인지 확인하여 블록의 유무정함
-    for (let x = 0; x < widthBlockCount; x++) {
-        for (let y = 0; y < heightBlockCount; y++) {
-            if (tetrisBoard[x][y]) {
-                //내가 움직이는것
-                context.fillStyle = "yellow";
-            } else if (stackedBoard[x][y]) {
-                //쌓인블록
-                context.fillStyle = "#c3c3c3";
-            } else {
-                context.fillStyle = "black";
-            }
-            context.fillRect(borderWidth * x + blocksize * x, borderWidth * y + blocksize * y, blocksize, blocksize);
-        }
-    }
-}
+//테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요
 
 //--------------여기가 테트리스 실행부 나중에 main.js로 뺄예정
 document.addEventListener("keydown", handleKeyPress);
-let randomBlock = chooseBlock(blockIndex); //function.js에서 블럭랜덤으로 선택
+let randomBlock = chooseBlock(blockIndex[0]); //function.js에서 블럭랜덤으로 선택
 const test = setInterval(function () {
     tetrisBoardArray(); //배열초기화
     initCanvas(); //배경덮어씀
+    initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
+    showNextBlock(); // 다음블럭보여줌
     rotate_num = Math.abs(rotate) % 4; //블록회전시키는것 0~3값만나옵니다
     controll_x = 0; // 오른쪽으로 빠져나가지 않게하는 변수
     controll_y = 0; // 높이가 높은 블럭을 내렸을때 맨밑바닥인경우 조절해줌
     blockLocationArray_x = []; //블럭의 x좌표 값들 저장하는배열
     blockLocationArray_y = []; //블럭의 y좌표 값들 저장하는배열
+    
 
     // 블럭을 그릴때마다 체크해야함 블럭이 겹치는지 안겹치는지 - 블럭한개가 닿앗을때
     for (let i = 0; i < randomBlock[0].length; i++) {
@@ -76,7 +58,9 @@ const test = setInterval(function () {
                 let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
                 stackedBoard[x][y - 1] = true; // 회색블럭으로 그리는것
             }
-            randomBlock = chooseBlock(nextBlockGenerator.getNextBlock());
+            blockIndex.push(nextBlockGenerator.getNextBlock()); //랜덤수 생성해서 인덱스 배열에 넣기
+            blockIndex.shift(); // 배열의 첫번째 요소 제거
+            randomBlock = chooseBlock(blockIndex[0]); //랜덤블록은 첫번째를 제거한 1번째 인덱스가 되는것
             move_y = 0;
         }
     }
@@ -91,10 +75,6 @@ const test = setInterval(function () {
             controll_y = blockLocationArray_y[num];
         }
     }
-    // console.log(blockLocationArray_x);
-    // console.log(blockLocationArray_y);
-    console.log(controll_x);
-    // console.log(controll_y);
 
     //-----------------------------------------------------
     drawBlocks(); //이게 쌓인블록과 내가 조종할 블록을 그려주는 함수
@@ -108,9 +88,12 @@ const test = setInterval(function () {
             let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
             stackedBoard[x][y] = true;
         }
-        move_y = 0; //
-        randomBlock = chooseBlock(nextBlockGenerator.getNextBlock());
+        move_y = 0; // 블록높이 초기화
+        blockIndex.push(nextBlockGenerator.getNextBlock()); //랜덤수 생성해서 인덱스 배열에 넣기
+        blockIndex.shift(); // 배열의 첫번째 요소 제거
+        randomBlock = chooseBlock(blockIndex[0]); //랜덤블록은 첫번째를 제거한 1번째 인덱스가 되는것
     }
     move_y++; //블럭내림
     tetrisBoard.length = 0; //배열값삭제
+
 }, 100);

@@ -1,6 +1,6 @@
 let tetrisBoard = []; //내가 조종할 테트리스
 let stackedBoard = []; // 쌓인 테트리스 공간
-
+let nextBlockBoard = []; // 다음에 보여줄 블럭
 function tetrisBoardArray() {
     // 세로 29칸, 가로 12칸 테트리스 배열
     for (let height = 0; height < 29; height++) {
@@ -21,12 +21,20 @@ function stackedBoardArray() {
     }
 }
 
+function nextBlockBoardArray() {
+    // 세로 25칸, 가로 10칸 테트리스 배열
+    for (let height = 0; height < 20; height++) {
+        nextBlockBoard[height] = [];
+        for (let width = 0; width < 10; width++) {
+            nextBlockBoard[height][width] = false; // 아직 아무것도 쌓인게 없어서 false
+        }
+    }
+}
+
 // 배열생성
 tetrisBoardArray();
 stackedBoardArray();
-
-console.log(tetrisBoard);
-console.log(stackedBoard);
+nextBlockBoardArray();
 
 // 방식(Math)
 function getRandomBlockIndex() {
@@ -47,8 +55,12 @@ class NextBlock {
     }
 }
 const nextBlockGenerator = new NextBlock();
-let blockIndex = nextBlockGenerator.getNextBlock();
-console.log(blockIndex);
+let blockIndex = []
+for (let i = 0; i < 3; i++) {
+    blockIndex.push(nextBlockGenerator.getNextBlock());
+}
+
+
 
 //1~7 숫자를 랜덤으로 생성된것에 따라 블럭을 골라서 리턴
 function chooseBlock(num) {
@@ -110,3 +122,87 @@ function handleKeyPress(event) {
             break;
     }
 }
+//초기화
+function initCanvas() {
+    // 배경 그리기
+    context.fillStyle = "black"; //캔버스 블럭 색깔 종류
+    for (let x = 0; x < widthBlockCount; x++) {
+        //가로세로 블럭수만큼 캔버스에 블럭그려넣기
+        for (let y = 0; y < heightBlockCount; y++) {
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+}
+//블럭색칠
+function drawBlock(x, y) {
+    //원하는 블럭에 색칠하기
+    tetrisBoard[x][y] = true;
+}
+// 조종할 블럭과 쌓인 블럭을 그려주는 함수
+function drawBlocks() {
+    //배열이 ture인지 false인지 확인하여 블록의 유무정함
+    for (let x = 0; x < widthBlockCount; x++) {
+        for (let y = 0; y < heightBlockCount; y++) {
+            if (tetrisBoard[x][y]) {
+                //내가 움직이는것
+                context.fillStyle = "yellow";
+            } else if (stackedBoard[x][y]) {
+                //쌓인블록
+                context.fillStyle = "#c3c3c3";
+            } else {
+                context.fillStyle = "black";
+            }
+            context.fillRect(borderWidth * x + blocksize * x, borderWidth * y + blocksize * y, blocksize, blocksize);
+        }
+    }
+}
+//다음 블럭 보여주는것
+function initNextBlockCanvas() {
+    // 배경 그리기
+    nextBlockContext.fillStyle = "black"; //캔버스 블럭 색깔 종류
+    for (let x = 0; x < nextwidthBlockCount; x++) {
+        //가로세로 블럭수만큼 캔버스에 블럭그려넣기
+        for (let y = 0; y < nextheightBlockCount; y++) {
+            nextBlockContext.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+}
+//다음에 보여줄 블력 그리기
+function drawNextBlock() {
+
+    nextBlockContext.fillStyle = "yellow";
+    
+    for (let x = 0; x < nextwidthBlockCount; x++) {
+        for (let y = 0; y < nextheightBlockCount; y++) {
+            if (nextBlockBoard[x][y]) {
+                nextBlockContext.fillRect(
+                    nextBoarderWidth * x + nextBlocksize * x,
+                    nextBoarderWidth * y + nextBlocksize * y,
+                    nextBlocksize,
+                    nextBlocksize);
+            }
+
+        }
+    }
+}
+//블력그리기
+function drawNextBlockOne(x, y) {
+    if (blockIndex[1] == 4) {
+        nextBlockBoard[x + 2][y + 3] = true;    //ㅁ 모양일때 가운데로 안가가지고 이렇게했습니다
+    }
+    else {
+        nextBlockBoard[x + 1][y + 3] = true;  // 그외는 다이렇게 무지성 하드코딩;;
+    }
+}
+// 블럭보여주기
+function showNextBlock() {
+    for (let i = 0; i < chooseBlock(blockIndex[1]).length; i++) {
+        let x = chooseBlock(blockIndex[1])[0][i][0]; // x 좌표
+        let y = chooseBlock(blockIndex[1])[0][i][1]; // y 좌표
+        drawNextBlockOne(x, y);
+    }
+    drawNextBlock();
+    nextBlockBoard.length = 0;
+    nextBlockBoardArray();
+}
+
