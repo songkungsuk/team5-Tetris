@@ -46,12 +46,7 @@ function drawBlocks() {
             } else {
                 context.fillStyle = "black";
             }
-            context.fillRect(
-                borderWidth * x + blocksize * x,
-                borderWidth * y + blocksize * y,
-                blocksize,
-                blocksize
-            );
+            context.fillRect(borderWidth * x + blocksize * x, borderWidth * y + blocksize * y, blocksize, blocksize);
         }
     }
 }
@@ -62,12 +57,12 @@ let randomBlock = chooseBlock(blockIndex); //function.js에서 블럭랜덤으�
 const test = setInterval(function () {
     tetrisBoardArray(); //배열초기화
     initCanvas(); //배경덮어씀
-    rotate_num = Math.abs(rotate) % 4 //블록회전시키는것 0~3값만나옵니다
+    rotate_num = Math.abs(rotate) % 4; //블록회전시키는것 0~3값만나옵니다
     controll_x = 0; // 오른쪽으로 빠져나가지 않게하는 변수
     controll_y = 0; // 높이가 높은 블럭을 내렸을때 맨밑바닥인경우 조절해줌
     blockLocationArray_x = []; //블럭의 x좌표 값들 저장하는배열
     blockLocationArray_y = []; //블럭의 y좌표 값들 저장하는배열
-    
+
     // 블럭을 그릴때마다 체크해야함 블럭이 겹치는지 안겹치는지 - 블럭한개가 닿앗을때
     for (let i = 0; i < randomBlock[0].length; i++) {
         let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
@@ -88,17 +83,18 @@ const test = setInterval(function () {
 
     //x와 y의 최대값 뽑는 것
     for (let num = 0; num < blockLocationArray_x.length; num++) {
-        if(controll_x < blockLocationArray_x[num]){ 
+        if (controll_x < blockLocationArray_x[num]) {
             controll_x = blockLocationArray_x[num];
         }
 
-        if(controll_y < blockLocationArray_y[num]){
+        if (controll_y < blockLocationArray_y[num]) {
             controll_y = blockLocationArray_y[num];
         }
     }
+    // console.log(blockLocationArray_x);
+    // console.log(blockLocationArray_y);
     console.log(controll_x);
-    console.log(controll_y);
-
+    // console.log(controll_y);
 
     //-----------------------------------------------------
     drawBlocks(); //이게 쌓인블록과 내가 조종할 블록을 그려주는 함수
