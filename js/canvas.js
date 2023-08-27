@@ -79,6 +79,7 @@ const test = setInterval(function () {
                 let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
                 let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
                 stackedBoard[x][y - 1] = true; // 회색블럭으로 그리는것
+                
             }
             getRandAndInitMoveY();
         }
@@ -96,7 +97,7 @@ const test = setInterval(function () {
     if (move_x > widthBlockCount - (controll_x + 1)) {
         move_x -= controll_x - 1;
     }
-
+    
     //-----------------------------------------------------
     drawBlocks(); //이게 쌓인블록과 내가 조종할 블록을 그려주는 함수
     //-----------------------------------------------------
