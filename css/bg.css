@@ -12,7 +12,6 @@
             */
             background-color: #f0f0f0;
         }
-
         h2 {
             color: #f0f0f0;
 
@@ -24,7 +23,7 @@
             align-items: center;
 
         }
-
+        
         .container {
             display: flex;
 
