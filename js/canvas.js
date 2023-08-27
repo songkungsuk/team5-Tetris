@@ -78,7 +78,9 @@ const test = setInterval(function () {
             controll_y = blockLocationArray_y[num];
         }
     }
-
+    if (move_x > widthBlockCount - (controll_x + 1)) {
+        move_x -= controll_x;
+    }
 
     //-----------------------------------------------------
     drawBlocks(); //이게 쌓인블록과 내가 조종할 블록을 그려주는 함수
