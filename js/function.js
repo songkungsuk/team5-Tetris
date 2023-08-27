@@ -1,5 +1,5 @@
 let tetrisBoard = []; //내가 조종할 테트리스
-let stackedBoard = [];  // 쌓인 테트리스 공간
+let stackedBoard = []; // 쌓인 테트리스 공간
 
 function tetrisBoardArray() {
     // 세로 29칸, 가로 12칸 테트리스 배열
@@ -22,13 +22,13 @@ function stackedBoardArray() {
 }
 
 // 배열생성
-tetrisBoardArray(); 
+tetrisBoardArray();
 stackedBoardArray();
 
 console.log(tetrisBoard);
 console.log(stackedBoard);
 
-// 방식(Math) 
+// 방식(Math)
 function getRandomBlockIndex() {
     return Math.floor(Math.random() * 7); // 0부터 6까지의 숫자를 랜덤으로 반환
 }
@@ -74,15 +74,25 @@ function chooseBlock(num) {
 function handleKeyPress(event) {
     switch (event.keyCode) {
         case 37: // Left arrow
-            move_x--; //왼쪽으로갈땐 --
+            if (move_x > 0) {
+                //  맨 왼쪽에 닿으면 안 움직이게 하려고
+                move_x--; //왼쪽으로갈땐 --
+            }
             break;
         case 39: // Right arrow
-            move_x++; //오른쪽으로갈땐 ++
+            if (move_x < 11) {
+                // 맨 오른쪽에 닿으면 안 움직이게 하려고
+                move_x++; //오른쪽으로갈땐 ++
+            }
             break;
         case 40: // Down arrow
-            move_y++; //내려갈때는 y가 늘어가야되므로 y++
+            if (move_y < 26) {
+                // 맨 밑에 닿으면 안 내려가게 하려고
+                move_y++; //내려갈때는 y가 늘어가야되므로 y++
+            }
             break;
         case 38: // Up arrow
+            // 누르는 간격이 짧으면 작동이 안되게 해서 위로 올라가는게 아니라 아래로 내려가게 할 수 있을것 같은데
             move_y--; //느리게 내릴때는 위쪽방향키
             break;
         case 90: // 'z' key
@@ -100,5 +110,3 @@ function handleKeyPress(event) {
             break;
     }
 }
-
-
