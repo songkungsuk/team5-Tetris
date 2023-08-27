@@ -49,6 +49,7 @@ function check_stacked() {
 //--------------여기가 테트리스 실행부 나중에 main.js로 뺄예정
 let isUpKeyPressed = false;
 document.addEventListener("keydown", handleKeyPress);
+document.addEventListener("keyup", handleKeyUp);
 // 위 방향키에서 손을 뗐을때 false로 바꿔서 정상 속도로 내려가게함
 document.addEventListener("keyup", function (e) {
     isUpKeyPressed = false;
