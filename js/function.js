@@ -86,6 +86,59 @@ function chooseBlock(num) {
             return blocks.blockTypeSeven;
     }
 }
+//1~7 숫자를 랜덤으로 생성된것에 따라 색깔을 골라서 리턴
+function chooseColor(num) {
+    switch (num) {
+        case 1:
+            context.fillStyle = '#a2ddf3';
+            break;
+        case 2:
+            context.fillStyle = '#f3a2ca';
+            break;
+        case 3:
+            context.fillStyle = '#a2f3db';
+            break;
+        case 4:
+            context.fillStyle = '#56a6ff';
+            break;
+        case 5:
+            context.fillStyle = '#f3c8a2';
+            break;
+        case 6:
+            context.fillStyle = '#eaa2f3';
+            break;
+        case 7:
+            context.fillStyle = '#a2a6f3';
+            break;
+    }
+}
+//1~7 숫자를 랜덤으로 생성된것에 따라 색깔을 골라서 리턴
+function chooseNextBlockColor(num) {
+    switch (num) {
+        case 1:
+            nextBlockContext.fillStyle = '#a2ddf3';
+            break;
+        case 2:
+            nextBlockContext.fillStyle = '#f3a2ca';
+            break;
+        case 3:
+            nextBlockContext.fillStyle = '#a2f3db';
+            break;
+        case 4:
+            nextBlockContext.fillStyle = '#56a6ff';
+            break;
+        case 5:
+            nextBlockContext.fillStyle = '#f3c8a2';
+            break;
+        case 6:
+            nextBlockContext.fillStyle = '#eaa2f3';
+            break;
+        case 7:
+            nextBlockContext.fillStyle = '#a2a6f3';
+            break;
+    }
+}
+
 //키이벤트
 function handleKeyPress(event) {
     switch (event.keyCode) {
@@ -191,10 +244,11 @@ function drawBlock(x, y) {
 function drawBlocks() {
     //배열이 ture인지 false인지 확인하여 블록의 유무정함
     for (let x = 0; x < widthBlockCount; x++) {
-        for (let y = 0; y < heightBlockCount; y++) {D
+        for (let y = 0; y < heightBlockCount; y++) {
             if (tetrisBoard[x][y]) {
                 //내가 움직이는것
-                context.fillStyle = "yellow";
+                // context.fillStyle = "yellow";
+                chooseColor(blockIndex[0]);
             } else if (stackedBoard[x][y]) {
                 //쌓인블록
                 context.fillStyle = "#c3c3c3";
@@ -218,7 +272,8 @@ function initNextBlockCanvas() {
 }
 //다음에 보여줄 블력 그리기
 function drawNextBlock() {
-    nextBlockContext.fillStyle = "yellow";
+    chooseNextBlockColor(blockIndex[1]);
+    chooseColor()
     for (let x = 0; x < nextwidthBlockCount; x++) {
         for (let y = 0; y < nextheightBlockCount; y++) {
             if (nextBlockBoard[x][y]) {
