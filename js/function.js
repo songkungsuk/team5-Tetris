@@ -1,4 +1,5 @@
-let tetrisBoard = [];
+let tetrisBoard = []; //내가 조종할 테트리스
+let stackedBoard = [];  // 쌓인 테트리스 공간
 
 function tetrisBoardArray() {
     // 세로 29칸, 가로 12칸 테트리스 배열
@@ -9,8 +10,23 @@ function tetrisBoardArray() {
         }
     }
 }
-tetrisBoardArray();
+
+function stackedBoardArray() {
+    // 세로 29칸, 가로 12칸 테트리스 배열
+    for (let height = 0; height < 29; height++) {
+        stackedBoard[height] = [];
+        for (let width = 0; width < 12; width++) {
+            stackedBoard[height][width] = false; // 아직 아무것도 쌓인게 없어서 false
+        }
+    }
+}
+
+// 배열생성
+tetrisBoardArray(); 
+stackedBoardArray();
+
 console.log(tetrisBoard);
+console.log(stackedBoard);
 
 // 방식(Math) 
 function getRandomBlockIndex() {
