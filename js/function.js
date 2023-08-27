@@ -80,7 +80,7 @@ function handleKeyPress(event) {
             }
             break;
         case 39: // Right arrow
-            if (move_x < 11) {
+            if (move_x < widthBlockCount - (controll_x + 1)) {
                 // 맨 오른쪽에 닿으면 안 움직이게 하려고
                 move_x++; //오른쪽으로갈땐 ++
             }
