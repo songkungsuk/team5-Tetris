@@ -1,3 +1,9 @@
+//---------------------------------div요소------------------------------------
+const upKey = document.querySelector('#upKey');
+const downKey = document.querySelector('#downKey');
+const leftKey = document.querySelector('#leftKey');
+const rightKey = document.querySelector('#rightKey');
+//----------------------------------------------------------------------------
 let tetrisBoard = []; //내가 조종할 테트리스
 let stackedBoard = []; // 쌓인 테트리스 공간
 let nextBlockBoard = []; // 다음에 보여줄 블럭
@@ -80,7 +86,6 @@ function chooseBlock(num) {
             return blocks.blockTypeSeven;
     }
 }
-
 //키이벤트
 function handleKeyPress(event) {
     switch (event.keyCode) {
@@ -88,22 +93,23 @@ function handleKeyPress(event) {
             if (move_x > 0) {
                 //  맨 왼쪽에 닿으면 안 움직이게 하려고
                 move_x--; //왼쪽으로갈땐 --
+                leftKey.style.backgroundColor = '#f0f0f0';
             }
+
             break;
         case 39: // Right arrow
             if (move_x < widthBlockCount - (controll_x + 1)) {
                 // 맨 오른쪽에 닿으면 안 움직이게 하려고
                 move_x++; //오른쪽으로갈땐 ++
             }
+            rightKey.style.backgroundColor = '#f0f0f0';
             break;
         case 40: // Down arrow
             if (move_y < 26) {
                 // 맨 밑에 닿으면 안 내려가게 하려고
-                if (move_y >= heightBlockCount - (controll_y + 1 + stacked_height + 2)) {
-                    break;
-                }
-                move_y++;
+                move_y++; //내려갈때는 y가 늘어가야되므로 y++
             }
+            downKey.style.backgroundColor = '#f0f0f0';
             break;
         case 38: // Up arrow
             // 위 방향키가 안 눌린 상태면 눌린 상태로 바꾸고, 눌린 상태면 slowDown() 실행해서 느려지게 함
@@ -118,6 +124,7 @@ function handleKeyPress(event) {
                     }
                 }, 200); // 더 천천히 하거나 빠르게 할거면 이거 숫자 바꾸면 됨
             }
+            upKey.style.backgroundColor = '#f0f0f0';
             break;
         case 90: // 'z' key
             rotate--;
@@ -130,10 +137,39 @@ function handleKeyPress(event) {
             break;
         case 32: // Space bar
             // 바로 떨어지게 하기 기능 추가
-            move_y = heightBlockCount - (controll_y + 1 + stacked_height + 2);
+            if(!(move_y > heightBlockCount - (controll_y + 1 + stacked_height + 1))){
+                move_y = heightBlockCount - (controll_y + 1 + stacked_height + 3);
+            }
             break;
     }
 }
+//키업
+function handleKeyUp(event) {
+    switch (event.keyCode) {
+        case 37: // Left arrow
+            leftKey.style.backgroundColor = 'gray';
+            break;
+        case 39: // Right arrow
+            rightKey.style.backgroundColor = 'gray';
+            break;
+        case 40: // Down arrow
+            downKey.style.backgroundColor = 'gray';
+            break;
+        case 38: // Up arrow
+            upKey.style.backgroundColor = 'gray';
+            break;
+        case 90: // 'z' key
+            break;
+        case 67: // 'c' key
+            break;
+        case 16: // Shift key
+            // 블록 저장 기능 추가
+            break;
+        case 32: // Space bar
+            break;
+    }
+}
+//--------------------------------------------------------------------------------------------------------------
 //초기화
 function initCanvas() {
     // 배경 그리기
@@ -149,12 +185,13 @@ function initCanvas() {
 function drawBlock(x, y) {
     //원하는 블럭에 색칠하기
     tetrisBoard[x][y] = true;
+
 }
 // 조종할 블럭과 쌓인 블럭을 그려주는 함수
 function drawBlocks() {
     //배열이 ture인지 false인지 확인하여 블록의 유무정함
     for (let x = 0; x < widthBlockCount; x++) {
-        for (let y = 0; y < heightBlockCount; y++) {
+        for (let y = 0; y < heightBlockCount; y++) {D
             if (tetrisBoard[x][y]) {
                 //내가 움직이는것
                 context.fillStyle = "yellow";
@@ -209,7 +246,7 @@ function showNextBlock() {
     nextBlockBoard.length = 0;
     nextBlockBoardArray();
 }
-//블럭 인덱스 배열에 미리 넣어주면서 새로 나올블록도 나오게 해줌
+//블럭 인덱스 배열에 미리 넣어주면서 새로 나올블록도 나오게 해줌 
 function getRandAndInitMoveY() {
     blockIndex.push(nextBlockGenerator.getNextBlock()); //랜덤수 생성해서 인덱스 배열에 넣기
     blockIndex.shift(); // 배열의 첫번째 요소 제거
