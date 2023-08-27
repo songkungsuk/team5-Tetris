@@ -65,7 +65,7 @@ const test = setInterval(function () {
     for (let i = 0; i < randomBlock[0].length; i++) {
         let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
         let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
-        if(controll_y )
+        
         drawBlock(x, y);
         if (stackedBoard[x][y] == tetrisBoard[x][y]) {
             for (let i = 0; i < randomBlock[0].length; i++) {
