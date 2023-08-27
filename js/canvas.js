@@ -29,8 +29,23 @@ let blockLocationArray_x = []; //블럭의 x좌표 값들 저장하는배열
 let blockLocationArray_y = []; //블럭의 y좌표 값들 저장하는배열
 let countTrue = 0; // 테트리스 한줄이 전부 채워졋는지 확인하는 변수
 let score = 0; //점수
-//테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요
 
+let stacked_number = 0; // 계산용 변수
+//테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요
+//제일 높이 쌓여있는 블럭의 높이를 저장하는 함수
+function check_stacked() {
+    for (let x = 0; x < widthBlockCount; x++) {
+        for (let y = 0; y < heightBlockCount; y++){
+            if(stackedBoard[x][y]){
+                stacked_number++;
+            }
+        }
+        if(stacked_number > stacked_height){
+            stacked_height = stacked_number;
+        }
+        stacked_number = 0;
+    }
+}
 //--------------여기가 테트리스 실행부 나중에 main.js로 뺄예정
 let isUpKeyPressed = false;
 document.addEventListener("keydown", handleKeyPress);
@@ -45,7 +60,7 @@ const test = setInterval(function () {
     initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
     showNextBlock(); // 다음블럭보여줌
     getBlockScore(); //블럭이 한줄이 채워져있는지 확인하기 채워졌으면 지움
-
+    check_stacked(); ////제일 높이 쌓여있는 블럭의 높이를 저장하는 함수
     rotate_num = Math.abs(rotate) % 4; //블록회전시키는것 0~3값만나옵니다
     controll_x = 0; // 오른쪽으로 빠져나가지 않게하는 변수
     controll_y = 0; // 높이가 높은 블럭을 내렸을때 맨밑바닥인경우 조절해줌
@@ -79,7 +94,7 @@ const test = setInterval(function () {
         }
     }
     if (move_x > widthBlockCount - (controll_x + 1)) {
-        move_x -= controll_x;
+        move_x -= controll_x - 1;
     }
 
     //-----------------------------------------------------
