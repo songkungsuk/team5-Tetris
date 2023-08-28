@@ -164,7 +164,7 @@ function handleKeyPress(event) {
             if (move_y < 26) {
                 // 맨 밑에 닿으면 안 내려가게 하려고
                 // 맨밑으로 갔을때
-                if (move_y == heightBlockCount - (controll_y + 1)) {
+                if (move_y == heightBlockCount - (controll_y + 1)) { //블럭이 바닥으로 갔을때
                     //블럭의 높낮이에 따라서 블럭을올려주거나 낮춰줌 controll_y 값이 달라짐
                     for (let i = 0; i < randomBlock[0].length; i++) {
                         let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
