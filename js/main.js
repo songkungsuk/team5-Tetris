@@ -26,22 +26,24 @@ const test = setInterval(function () {
     for (let i = 0; i < randomBlock[0].length; i++) {
         let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
         let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
-        drawBlock(x, y);
-        blockLocationArray_x.push(x - move_x);
-        blockLocationArray_y.push(y - move_y);
-        if (stackedBoard[x][y] == tetrisBoard[x][y]) {
-            for (let i = 0; i < randomBlock[0].length; i++) {
+        drawBlock(x, y); //블럭에 있는 좌표들 칠함
+        blockLocationArray_x.push(x - move_x); //블럭의오른쪽 최대길이
+        blockLocationArray_y.push(y - move_y); //블럭의아래쪽 최대길이
+        //이부분때문에 함수로 뺄수가없엇어요
+        if (stackedBoard[x][y] == tetrisBoard[x][y]) {  //이게 제일중요 그리는거하고 쌓인거하고 겹쳤을때 로직
+            for (let i = 0; i < randomBlock[0].length; i++) {  //그자리에있는 블럭의 좌표 뽑아냄
                 let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
                 let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
-                
-                stackedBoard[x][y - 1] = true; // 회색블럭으로 그리는것
+                //바로위에다가 그려야하니까 y-1 // y가 증가할수록 내려감 // 감소할수록 올라감
+                stackedBoard[x][y - 1] = true; // 회색블럭으로 그리는것 
 
             }
+            //이건 블럭높이 초기화해주고 랜덤블럭 배열에 밀어넣어주는역할함
             getRandAndInitMoveY();
         }
     }
 
-    //x와 y의 최대값 뽑는 것
+    //x와 y의 최대값 뽑는 것 Min, Max 구하는거
     for (let num = 0; num < blockLocationArray_x.length; num++) {
         if (controll_x < blockLocationArray_x[num]) { //블록의 오른쪽 최대좌표
             controll_x = blockLocationArray_x[num];
@@ -50,24 +52,26 @@ const test = setInterval(function () {
             controll_y = blockLocationArray_y[num];
         }
     }
-    if (move_x > widthBlockCount - (controll_x + 1)) {
+    // 블럭이 회전햇을때 오른쪽으로 빠져나왔으면 블럭을 왼쪽으로 밀어냄
+    if (move_x > widthBlockCount - (controll_x + 1)) { 
         move_x -= controll_x - 1;
     }
 
     //-----------------------------------------------------
-    drawBlocks(); //이게 쌓인블록과 내가 조종할 블록을 그려주는 함수
+    drawBlocks(); //이게 쌓인블록과 내가 조종할 블록을 그려주는 함수 funtion.js에 빼놨음 //함수는 싹다 function에 넣어놨어요
     //-----------------------------------------------------
 
     // 맨밑으로 갔을때
-    if (move_y == heightBlockCount - (controll_y + 1)) {
+    if (move_y == heightBlockCount - (controll_y + 1)) {//controll_y는 배열의 좌표라 +1해줫음
         //블럭의 높낮이에 따라서 블럭을올려주거나 낮춰줌 controll_y 값이 달라짐
         for (let i = 0; i < randomBlock[0].length; i++) {
             let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
             let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
             stackedBoard[x][y] = true;
         }
+        //이건 블럭높이 초기화해주고 랜덤블럭 배열에 밀어넣어주는역할함
         getRandAndInitMoveY();
     }
     move_y++; //블럭내림
     tetrisBoard.length = 0; //배열값삭제
-}, 100);
+}, 100); //100 이숫자를 바꾸면 속도가변함
