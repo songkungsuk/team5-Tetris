@@ -366,3 +366,15 @@ function check_stacked() {
         stacked_number = 0;
     }
 }
+
+//맨위의 블럭이 채워졌을경우 게임오버
+function checkGameOverEvent(){
+    for(let x = 0; x< widthBlockCount; x++){
+        if(stackedBoard[x][0]){
+            player._stop(bgm);
+            player.play(gameOver);
+            clearInterval(test);
+            
+        }
+    }
+}

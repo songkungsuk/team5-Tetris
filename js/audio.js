@@ -17,11 +17,7 @@ const player = new AudioPlayer();
 const bgm = document.querySelector('#bgm');
 const clearLine = document.querySelector('#clear_line');
 const drop = document.querySelector('#drop');
-const gameOver = document.querySelector('#gameOver');
+const gameOver = document.querySelector('#game_over');
 
 player.play(bgm);
-
-function playBgm() {
-    player.play(bgm);
-}
 

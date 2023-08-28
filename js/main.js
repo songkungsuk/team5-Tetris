@@ -15,6 +15,7 @@ const test = setInterval(function () {
     showNextBlock(); // 다음블럭보여줌
     getBlockScore(); //블럭이 한줄이 채워져있는지 확인하기 채워졌으면 지움
     check_stacked(); ////제일 높이 쌓여있는 블럭의 높이를 저장하는 함수
+    checkGameOverEvent(); // 맨위 블럭이 쌓이면 게임오버
     rotate_num = Math.abs(rotate) % 4; //블록회전시키는것 0~3값만나옵니다
     controll_x = 0; // 오른쪽으로 빠져나가지 않게하는 변수
     controll_y = 0; // 높이가 높은 블럭을 내렸을때 맨밑바닥인경우 조절해줌
