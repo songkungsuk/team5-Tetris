@@ -163,7 +163,19 @@ function handleKeyPress(event) {
         case 40: // Down arrow
             if (move_y < 26) {
                 // 맨 밑에 닿으면 안 내려가게 하려고
-                move_y++; //내려갈때는 y가 늘어가야되므로 y++
+                // 맨밑으로 갔을때
+                if (move_y == heightBlockCount - (controll_y + 1)) {
+                    //블럭의 높낮이에 따라서 블럭을올려주거나 낮춰줌 controll_y 값이 달라짐
+                    for (let i = 0; i < randomBlock[0].length; i++) {
+                        let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
+                        let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
+                        stackedBoard[x][y] = true;
+                    }
+                    getRandAndInitMoveY();
+                } else {
+                    move_y++; //내려갈때는 y가 늘어가야되므로 y++
+                }
+                
             }
             downKey.style.backgroundColor = '#f0f0f0';
             break;
@@ -197,13 +209,13 @@ function handleKeyPress(event) {
             // 바로 떨어지게 하기 기능 추가
             spaceKey.style.backgroundColor = '#f0f0f0';
             player.play(drop);
-            if (!(move_y > heightBlockCount - (controll_y + 1 + stacked_height + 1))) {
-                move_y = heightBlockCount - (controll_y + 1 + stacked_height + 3);
+            if (!(move_y > heightBlockCount - (controll_y + 1 + stacked_height + 1))) { // 테트리스 전체 높이에서 블럭의 최대길이와 가장높이쌓인것을 빼서 그게 블럭의 위치보다 낮지 않으면 실행 move_y는 계속증가한다
+                move_y = heightBlockCount - (controll_y + 1 + stacked_height + 3); //+3은 위치조절해줄려고 했음 빼주는 숫자가 커질수록 블럭이 위로올라감
             }
             break;
         case 66: //b 버튼
-        player.play(bgm);
-        break;
+            player.play(bgm);
+            break;
     }
 }
 //키업
@@ -330,6 +342,7 @@ function getBlockScore() {
                 //해당하는 블럭이 채워져있으면
                 countTrue++; //한줄에있는 블럭개수는늘어난다
                 if (countTrue === widthBlockCount) {
+                    countTrue = 0; //이걸 바로해줘야 다음줄에 1칸이비워져있어도 안내려감 이걸밑으로해버리면 밑의 로직을수행하면서 countTrue가 widthBlockCount와 동일하게 되면서 지워진다
                     // x축이 전부 채워지면 widthBlockCount는 12가 됨
                     for (let z = 0; z < widthBlockCount; z++) {
                         //z를 x좌표라고 생각하면 이해할수있음
@@ -342,7 +355,7 @@ function getBlockScore() {
                     score += 1000; // 점수올리기
                     player.play(clearLine);
                     document.querySelector("#score").innerHTML = score;
-                    countTrue = 0;
+
                 }
             } else {
                 countTrue = 0;
@@ -368,13 +381,13 @@ function check_stacked() {
 }
 
 //맨위의 블럭이 채워졌을경우 게임오버
-function checkGameOverEvent(){
-    for(let x = 0; x< widthBlockCount; x++){
-        if(stackedBoard[x][0]){
+function checkGameOverEvent() {
+    for (let x = 0; x < widthBlockCount; x++) {
+        if (stackedBoard[x][0]) {
             player._stop(bgm);
             player.play(gameOver);
             clearInterval(test);
-            
+
         }
     }
 }
