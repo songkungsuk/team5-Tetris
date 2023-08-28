@@ -41,16 +41,39 @@
           <!-- 아래쪽 방향키 -->
           <div class="direction-key" id="rightKey">→</div>
           <!-- 오른쪽 방향키 -->
-          <div></div>
+          <div></div>          
         </div>
+        
+        <br>
+        <div class="direction-keys">
+          <!-- 조작 방향키를 포함하는 컨테이너 -->
+          <div></div>
+          <div></div>
+          <div></div>
+          <div class="direction-key" id="cKey">C</div>
+          <!-- 왼쪽 방향키 -->
+          <div></div>
+          <div class="direction-key" id="zKey">Z</div>
+          <!-- 오른쪽 방향키 -->
+          <div></div>          
+        </div>
+        <div class="direction-key-space"  id="spaceKey">SPACE BAR</div>
       </div>
     </div>
+  </div>
+  
+  <div style="display: none;">
+    <!-- bgm은 b버튼으로 재생 -->
+    <audio src="bgm/Tetris 99  Main Theme 1 hour.mp3" id="bgm"></audio>
+    <audio src="/soundEffect/clear_line.mp3" id="clear_line"></audio>
+    <audio src="/soundEffect/drop.mp3" id="drop"></audio>
+    <audio src="/soundEffect/game_over.mp3" id="game_over"></audio>
   </div>
   <script src="/js/audio.js"></script>
   <script src="/js/function.js"></script>
   <script src="/js/block.js"></script>
   <script src="/js/canvas.js"></script>
-  <audio src="/bgm/Tetris 99  Main Theme 1 hour.mp3" autoplay controls style="display: none;" id="BGM"></audio>
+  <script src="/js/main.js"></script>
 </body>
 
 </html>

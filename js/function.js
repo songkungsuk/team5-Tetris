@@ -3,6 +3,9 @@ const upKey = document.querySelector('#upKey');
 const downKey = document.querySelector('#downKey');
 const leftKey = document.querySelector('#leftKey');
 const rightKey = document.querySelector('#rightKey');
+const spaceKey = document.querySelector('#spaceKey');
+const cKey = document.querySelector('#cKey');
+const zKey = document.querySelector('#zKey');
 //----------------------------------------------------------------------------
 let tetrisBoard = []; //내가 조종할 테트리스
 let stackedBoard = []; // 쌓인 테트리스 공간
@@ -181,19 +184,26 @@ function handleKeyPress(event) {
             break;
         case 90: // 'z' key
             rotate--;
+            zKey.style.backgroundColor = '#f0f0f0';
             break;
         case 67: // 'c' key
             rotate++;
+            cKey.style.backgroundColor = '#f0f0f0';
             break;
         case 16: // Shift key
             // 블록 저장 기능 추가
             break;
         case 32: // Space bar
             // 바로 떨어지게 하기 기능 추가
-            if(!(move_y > heightBlockCount - (controll_y + 1 + stacked_height + 1))){
+            spaceKey.style.backgroundColor = '#f0f0f0';
+            player.play(drop);
+            if (!(move_y > heightBlockCount - (controll_y + 1 + stacked_height + 1))) {
                 move_y = heightBlockCount - (controll_y + 1 + stacked_height + 3);
             }
             break;
+        case 66: //b 버튼
+        player.play(bgm);
+        break;
     }
 }
 //키업
@@ -212,13 +222,16 @@ function handleKeyUp(event) {
             upKey.style.backgroundColor = 'gray';
             break;
         case 90: // 'z' key
+            zKey.style.backgroundColor = 'gray';
             break;
         case 67: // 'c' key
+            cKey.style.backgroundColor = 'gray';
             break;
         case 16: // Shift key
             // 블록 저장 기능 추가
             break;
         case 32: // Space bar
+            spaceKey.style.backgroundColor = 'gray';
             break;
     }
 }
@@ -316,7 +329,7 @@ function getBlockScore() {
             if (stackedBoard[x][y]) {
                 //해당하는 블럭이 채워져있으면
                 countTrue++; //한줄에있는 블럭개수는늘어난다
-                if (countTrue == widthBlockCount) {
+                if (countTrue === widthBlockCount) {
                     // x축이 전부 채워지면 widthBlockCount는 12가 됨
                     for (let z = 0; z < widthBlockCount; z++) {
                         //z를 x좌표라고 생각하면 이해할수있음
@@ -327,12 +340,29 @@ function getBlockScore() {
                         }
                     }
                     score += 1000; // 점수올리기
+                    player.play(clearLine);
                     document.querySelector("#score").innerHTML = score;
+                    countTrue = 0;
                 }
             } else {
                 countTrue = 0;
                 continue;
             }
         }
+    }
+}
+
+//제일 높이 쌓여있는 블럭의 높이를 저장하는 함수
+function check_stacked() {
+    for (let x = 0; x < widthBlockCount; x++) {
+        for (let y = 0; y < heightBlockCount; y++) {
+            if (stackedBoard[x][y]) {
+                stacked_number++;
+            }
+        }
+        if (stacked_number > stacked_height) {
+            stacked_height = stacked_number;
+        }
+        stacked_number = 0;
     }
 }
