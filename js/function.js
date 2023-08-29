@@ -6,6 +6,7 @@ const rightKey = document.querySelector('#rightKey');
 const spaceKey = document.querySelector('#spaceKey');
 const cKey = document.querySelector('#cKey');
 const zKey = document.querySelector('#zKey');
+const startBtn = document.querySelector('#startBtn');
 //----------------------------------------------------------------------------
 let tetrisBoard = []; //내가 조종할 테트리스
 let stackedBoard = []; // 쌓인 테트리스 공간
@@ -175,7 +176,7 @@ function handleKeyPress(event) {
                 } else {
                     move_y++; //내려갈때는 y가 늘어가야되므로 y++
                 }
-                
+
             }
             downKey.style.backgroundColor = '#f0f0f0';
             break;
@@ -214,7 +215,7 @@ function handleKeyPress(event) {
             }
             break;
         case 66: //b 버튼
-            player.play(bgm);
+            player._stop(bgm);
             break;
     }
 }
@@ -380,14 +381,3 @@ function check_stacked() {
     }
 }
 
-//맨위의 블럭이 채워졌을경우 게임오버
-function checkGameOverEvent() {
-    for (let x = 0; x < widthBlockCount; x++) {
-        if (stackedBoard[x][0]) {
-            player._stop(bgm);
-            player.play(gameOver);
-            clearInterval(test);
-
-        }
-    }
-}
