@@ -37,7 +37,10 @@ function main() {
                     let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
                     let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
                     //바로위에다가 그려야하니까 y-1 // y가 증가할수록 내려감 // 감소할수록 올라감
-                    stackedBoard[x][y - 1] = true; // 회색블럭으로 그리는것 
+                    if(!(stackedBoard[x][y - 1])){
+                        stackedBoard[x][y - 1] = true; // 회색블럭으로 그리는것 
+                    }
+                    
 
                 }
                 //이건 블럭높이 초기화해주고 랜덤블럭 배열에 밀어넣어주는역할함
@@ -79,15 +82,17 @@ function main() {
     }, 100); //100 이숫자를 바꾸면 속도가변함
 
     //맨위의 블럭이 채워졌을경우 게임오버
-    function checkGameOverEvent() {
+    function checkGameOverEvent() { 
         for (let x = 0; x < widthBlockCount; x++) {
             if (stackedBoard[x][0]) {
-                player._stop(bgm);
-                player.play(gameOver);
-                clearInterval(test);
-                stackedBoard.length = 0;
-                stackedBoardArray();
-                stacked_height = 0;
+                player._stop(bgm);//전부 초기화 시킴
+                player.play(gameOver);//전부 초기화 시킴
+                clearInterval(test);//전부 초기화 시킴
+                stackedBoard.length = 0;//전부 초기화 시킴
+                stackedBoardArray();//전부 초기화 시킴
+                stacked_height = 0;//전부 초기화 시킴
+                tetrisBoard.length = 0; //배열값삭제
+                tetrisBoardArray(); //배열초기화
             }
         }
     }

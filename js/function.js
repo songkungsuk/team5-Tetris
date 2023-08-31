@@ -67,8 +67,14 @@ class NextBlock {
 }
 const nextBlockGenerator = new NextBlock();
 let blockIndex = [];
-for (let i = 0; i < 3; i++) {
-    blockIndex.push(nextBlockGenerator.getNextBlock());
+for (let i = 0; i < 7; i++) { //블럭 7개 중복되지않게 뽑아내기
+    let blockIndexNum = nextBlockGenerator.getNextBlock();
+    if(blockIndex.includes(blockIndexNum)){
+        i--;
+    }else{
+        blockIndex.push(blockIndexNum);
+    }
+    
 }
 
 //1~7 숫자를 랜덤으로 생성된것에 따라 블럭을 골라서 리턴
@@ -209,6 +215,7 @@ function handleKeyPress(event) {
         case 32: // Space bar
             // 바로 떨어지게 하기 기능 추가
             spaceKey.style.backgroundColor = '#f0f0f0';
+            check_stacked();
             player.play(drop);
             if (!(move_y > heightBlockCount - (controll_y + 1 + stacked_height + 1))) { // 테트리스 전체 높이에서 블럭의 최대길이와 가장높이쌓인것을 빼서 그게 블럭의 위치보다 낮지 않으면 실행 move_y는 계속증가한다
                 move_y = heightBlockCount - (controll_y + 1 + stacked_height + 3); //+3은 위치조절해줄려고 했음 빼주는 숫자가 커질수록 블럭이 위로올라감
@@ -353,9 +360,10 @@ function getBlockScore() {
                             stackedBoard[z][j] = stackedBoard[z][j - 1]; //위에있는 블럭들 다 아래로 끌어옴 -1 인이유는 y축이 아래로 갈수록 증가하기 때문에 위에있는배열은 수가작다
                         }
                     }
+                    stacked_height= 0; //제일 높이쌓인위치 초기화 인터벌마다 체크해줘서 다시 숫자가 변할것임
                     score += 1000; // 점수올리기
-                    player.play(clearLine);
-                    document.querySelector("#score").innerHTML = score;
+                    player.play(clearLine); //효과음 재생
+                    document.querySelector("#score").innerHTML = score;// 점수적어줌
 
                 }
             } else {
@@ -374,7 +382,7 @@ function check_stacked() {
                 stacked_number++;
             }
         }
-        if (stacked_number > stacked_height) {
+        if(stacked_height < stacked_number){ //제일 높이쌓여있는 블럭이 계산된 블럭보다 작을경우대입
             stacked_height = stacked_number;
         }
         stacked_number = 0;
