@@ -93,6 +93,8 @@ function main() {
                 stacked_height = 0;//전부 초기화 시킴
                 tetrisBoard.length = 0; //배열값삭제
                 tetrisBoardArray(); //배열초기화
+                initCanvas(); //배경덮어씀
+                initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
             }
         }
     }

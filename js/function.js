@@ -69,12 +69,12 @@ const nextBlockGenerator = new NextBlock();
 let blockIndex = [];
 for (let i = 0; i < 7; i++) { //블럭 7개 중복되지않게 뽑아내기
     let blockIndexNum = nextBlockGenerator.getNextBlock();
-    if(blockIndex.includes(blockIndexNum)){
+    if (blockIndex.includes(blockIndexNum)) {
         i--;
-    }else{
+    } else {
         blockIndex.push(blockIndexNum);
     }
-    
+
 }
 
 //1~7 숫자를 랜덤으로 생성된것에 따라 블럭을 골라서 리턴
@@ -336,7 +336,18 @@ function showNextBlock() {
 }
 //블럭 인덱스 배열에 미리 넣어주면서 새로 나올블록도 나오게 해줌 
 function getRandAndInitMoveY() {
-    blockIndex.push(nextBlockGenerator.getNextBlock()); //랜덤수 생성해서 인덱스 배열에 넣기
+    // blockIndex.push(nextBlockGenerator.getNextBlock()); //랜덤수 생성해서 인덱스 배열에 넣기
+    if (blockIndex.length == 2) {
+        for (let i = 0; i < 5; i++) { //블럭 5개 중복되지않게 뽑아내기
+            let blockIndexNum = nextBlockGenerator.getNextBlock();
+            if (blockIndex.includes(blockIndexNum)) {
+                i--;
+            } else {
+                blockIndex.push(blockIndexNum);
+            }
+
+        }
+    }
     blockIndex.shift(); // 배열의 첫번째 요소 제거
     randomBlock = chooseBlock(blockIndex[0]); //랜덤블록은 첫번째를 제거한 1번째 인덱스가 되는것
     move_y = 0;
@@ -345,6 +356,7 @@ function getRandAndInitMoveY() {
 // 블럭 없에고 점수 올리기
 function getBlockScore() {
     for (let y = 0; y < heightBlockCount; y++) {
+        countTrue = 0; //버그 테스트용
         for (let x = 0; x < widthBlockCount; x++) {
             if (stackedBoard[x][y]) {
                 //해당하는 블럭이 채워져있으면
@@ -360,7 +372,7 @@ function getBlockScore() {
                             stackedBoard[z][j] = stackedBoard[z][j - 1]; //위에있는 블럭들 다 아래로 끌어옴 -1 인이유는 y축이 아래로 갈수록 증가하기 때문에 위에있는배열은 수가작다
                         }
                     }
-                    stacked_height= 0; //제일 높이쌓인위치 초기화 인터벌마다 체크해줘서 다시 숫자가 변할것임
+                    stacked_height = 0; //제일 높이쌓인위치 초기화 인터벌마다 체크해줘서 다시 숫자가 변할것임
                     score += 1000; // 점수올리기
                     player.play(clearLine); //효과음 재생
                     document.querySelector("#score").innerHTML = score;// 점수적어줌
@@ -382,7 +394,7 @@ function check_stacked() {
                 stacked_number++;
             }
         }
-        if(stacked_height < stacked_number){ //제일 높이쌓여있는 블럭이 계산된 블럭보다 작을경우대입
+        if (stacked_height < stacked_number) { //제일 높이쌓여있는 블럭이 계산된 블럭보다 작을경우대입
             stacked_height = stacked_number;
         }
         stacked_number = 0;
