@@ -12,6 +12,7 @@ let tetrisBoard = []; //내가 조종할 테트리스
 let stackedBoard = []; // 쌓인 테트리스 공간
 let nextBlockBoard = []; // 다음에 보여줄 블럭
 let stacked_height = 0; // 쌓여있는 테트리스중 가장 높이쌓인위치
+let previoustMoveX = 0;
 function tetrisBoardArray() {
     // 세로 29칸, 가로 12칸 테트리스 배열
     for (let height = 0; height < 29; height++) {
@@ -156,9 +157,8 @@ function handleKeyPress(event) {
             if (move_x > 0) {
                 //  맨 왼쪽에 닿으면 안 움직이게 하려고
                 move_x--; //왼쪽으로갈땐 --
-                leftKey.style.backgroundColor = '#f0f0f0';
             }
-
+            leftKey.style.backgroundColor = '#f0f0f0';
             break;
         case 39: // Right arrow
             if (move_x < widthBlockCount - (controll_x + 1)) {
@@ -400,4 +400,6 @@ function check_stacked() {
         stacked_number = 0;
     }
 }
+
+
 
