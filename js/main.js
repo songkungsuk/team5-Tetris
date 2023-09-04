@@ -1,13 +1,53 @@
 
-//--------------여기가 테트리스 실행부 main.js
-let isUpKeyPressed = false;
-document.addEventListener("keydown", handleKeyPress);
-document.addEventListener("keyup", handleKeyUp);
+//------------------------------------main 실행전 중요한 요소들 추가-----------------------------------------------------
+let isUpKeyPressed = false; //위방향키 로직용 변수 function keyevent 참조
+document.addEventListener("keydown", handleKeyPress); //키다운 이벤트 추가
+document.addEventListener("keyup", handleKeyUp); //키보드 땟을때 이벤트 키보드 뭐눌럿는지 보여주는거할때 했어요
 // 위 방향키에서 손을 뗐을때 false로 바꿔서 정상 속도로 내려가게함
 document.addEventListener("keyup", function (e) {
     isUpKeyPressed = false;
 });
 let randomBlock = chooseBlock(blockIndex[0]); //function.js에서 블럭랜덤으로 선택
+//-----------------------------------------------------------------------------------------
+/*
+    -간단한 구조설명-
+
+    처음이코드를보면 그지같이 짜서 매우 어지러워보인다 그래도 집중해서 잘보고 따라와주길바랍니다.
+
+    코드가 어려우면 audio.js 랑 block.js는 보지마세요 건들일이 이제 거의 없습니다.
+
+    index.html과 bg.css 로 화면 구성
+
+    js로는 테트리스의 움직임이나 음악재생을 담당하였습니다.
+    block.js는 말그대로 블럭 모음집
+    function.js는 main.js 에 전부 관여함 위에서부터 아래로 실제로 만든 순서대로 나열하였으며 switch case는 따로 모아두었습니다.
+    마치 자바의 스테틱영역, 힙영역, 스택영역처럼 나눈것처럼 보면 뭔가 보일지도!?.
+
+    1. 세로 29칸, 가로 12칸 테트리스 배열을 function.js에서 3개 생성 
+        [1] 조종할 블럭, [2] 쌓인 블럭, [3] 미리 보여주는 블럭
+
+    2. canvas 를 통해서 배열이 ture인경우 해당 부분을 색칠하고 false 인경우 그리지 않습니다.
+
+    3. setInterval을 통해서 주기마다 function을 실행시켜줘서 매순간순간을 점검하는 것이죠
+        [1] 내가 조종하는 블럭은 매순간순간 지우고 그려주고 지우고 그려주고를 반복함 - tetrisBoardArray(), initCanvas(), getRandAndInitMoveY() 
+        [2] 블럭을 미리보여줌 - initNextBlockCanvas(), showNextBlock()
+        [3] 쌓인 블럭을 체크해서 한줄이 채워졌으면 그줄은 비워버리면서 그위에있는 배열은 싹다 한줄씩 내림 - getBlockScore()
+        [4] 스페이스바 버튼을 눌럿을때 블럭을 아래로 순식간에 내려버리는데 그 기준은 블럭중에서 가장 높이 쌓인 블럭을 기준으로함 - check_stacked()
+        [5] 맨위에 블럭이 하나라도 ture인경우(쌓인경우) 바로 게임오버 시켜버립니다 - checkGameOverEvent()
+        [6] 1. 블럭이 내려가는도중에 맨밑에 닿은경우
+                blockLocationArray_x
+                blockLocationArray_y 를통해서 해당하는 블럭의 최대 좌표를 구합니다 그리고 바닥에서 블럭의 최대좌표를 빼서 바닥에 안착시키는것이죠.
+            2. 블럭이 쌓인 블럭과 겹친경우
+                [블럭을 그릴때마다 체크해야함 블럭이 겹치는지 안겹치는지 - 블럭한개가 닿앗을때] - 이부분부터 보면됩니다
+                move_x, move_y 를통해 우리는 조종할 블럭의 좌표를 정하고 drawBlock(x,y) 로 그려줍니다 다시말하면 move_x, move_y가 블럭의 이동에 관여하는것인거죠.
+                if (stackedBoard[x][y] == tetrisBoard[x][y]) 스택보드는 쌓인것 테트리스 보드는 그린것인데 이것이 겹치는순간 바로 그순간블럭의 좌표를 뽑아낸다음 move_y를 -1 해서 위로 올려 스택보드에 그리게 하는것 인거죠. 
+                getRandAndInitMoveY 이거는 ctrl 눌러서 이동하면 뭐라뭐라되있는데 코드길어지는거 싫어서 걍 함수로 뺏습니다 ㅋㅋㅋ
+                
+            3. 참쉽죠? 궁금한거있으면 언제든질문.
+*/
+
+
+//여기가 테트리스 실행부 main.js------------------------------------------------------------
 function main() {
     player.play(bgm);
     const test = setInterval(function () {
