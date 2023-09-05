@@ -174,9 +174,9 @@ function handleKeyPress(event) {
                 if (move_y == heightBlockCount - (controll_y + 1)) { //블럭이 바닥으로 갔을때
                     //블럭의 높낮이에 따라서 블럭을올려주거나 낮춰줌 controll_y 값이 달라짐
                     for (let i = 0; i < randomBlock[0].length; i++) {
-                        let x = randomBlock[rotate_num][i][0] + move_x; // x 좌표
-                        let y = randomBlock[rotate_num][i][1] + move_y; // y 좌표
-                        stackedBoard[x][y] = true;
+                        let w = randomBlock[rotate_num][i][0] + move_x; // x 좌표
+                        let h = randomBlock[rotate_num][i][1] + move_y; // y 좌표
+                        stackedBoard[h][w] = true;
                     }
                     getRandAndInitMoveY();
                 } else {
@@ -260,35 +260,35 @@ function handleKeyUp(event) {
 function initCanvas() {
     // 배경 그리기
     context.fillStyle = "black"; //캔버스 블럭 색깔 종류
-    for (let x = 0; x < widthBlockCount; x++) {
+    for (let h = 0; h < heightBlockCount; h++) {
         //가로세로 블럭수만큼 캔버스에 블럭그려넣기
-        for (let y = 0; y < heightBlockCount; y++) {
+        for (let w = 0; w < widthBlockCount; w++) {
             context.fillRect(0, 0, canvas.width, canvas.height);
         }
     }
 }
 //블럭색칠
-function drawBlock(x, y) {
+function drawBlock(h, w) {
     //원하는 블럭에 색칠하기
-    tetrisBoard[x][y] = true;
+    tetrisBoard[h][w] = true;
 
 }
 // 조종할 블럭과 쌓인 블럭을 그려주는 함수
 function drawBlocks() {
     //배열이 ture인지 false인지 확인하여 블록의 유무정함
-    for (let x = 0; x < widthBlockCount; x++) {
-        for (let y = 0; y < heightBlockCount; y++) {
-            if (tetrisBoard[x][y]) {
+    for (let h = 0; h < heightBlockCount; h++) {
+        for (let w = 0; w < widthBlockCount; w++) {
+            if (tetrisBoard[h][w]) {
                 //내가 움직이는것
                 // context.fillStyle = "yellow";
                 chooseColor(blockIndex[0]);
-            } else if (stackedBoard[x][y]) {
+            } else if (stackedBoard[h][w]) {
                 //쌓인블록
                 context.fillStyle = "#c3c3c3";
             } else {
                 context.fillStyle = "black";
             }
-            context.fillRect(borderWidth * x + blocksize * x, borderWidth * y + blocksize * y, blocksize, blocksize);
+            context.fillRect(borderWidth * w + blocksize * w, borderWidth * h + blocksize * h, blocksize, blocksize);
         }
     }
 }
@@ -296,9 +296,9 @@ function drawBlocks() {
 function initNextBlockCanvas() {
     // 배경 그리기
     nextBlockContext.fillStyle = "black"; //캔버스 블럭 색깔 종류
-    for (let x = 0; x < nextwidthBlockCount; x++) {
+    for (let h = 0; h < nextheightBlockCount; h++) {
         //가로세로 블럭수만큼 캔버스에 블럭그려넣기
-        for (let y = 0; y < nextheightBlockCount; y++) {
+        for (let w = 0; w < nextwidthBlockCount; w++) {
             nextBlockContext.fillRect(0, 0, canvas.width, canvas.height);
         }
     }
@@ -307,10 +307,10 @@ function initNextBlockCanvas() {
 function drawNextBlock() {
     chooseNextBlockColor(blockIndex[1]);
     chooseColor()
-    for (let x = 0; x < nextwidthBlockCount; x++) {
-        for (let y = 0; y < nextheightBlockCount; y++) {
-            if (nextBlockBoard[x][y]) {
-                nextBlockContext.fillRect(nextBoarderWidth * x + nextBlocksize * x, nextBoarderWidth * y + nextBlocksize * y, nextBlocksize, nextBlocksize);
+    for (let h = 0; h < nextheightBlockCount; h++) {
+        for (let w = 0; w < nextwidthBlockCount; w++) {
+            if (nextBlockBoard[h][w]) {
+                nextBlockContext.fillRect(nextBoarderWidth * h + nextBlocksize * h, nextBoarderWidth * w + nextBlocksize * w, nextBlocksize, nextBlocksize);
             }
         }
     }
@@ -355,21 +355,21 @@ function getRandAndInitMoveY() {
 
 // 블럭 없에고 점수 올리기
 function getBlockScore() {
-    for (let y = 0; y < heightBlockCount; y++) {
+    for (let h = 0; h < heightBlockCount; h++) {
         countTrue = 0; //버그 테스트용
-        for (let x = 0; x < widthBlockCount; x++) {
-            if (stackedBoard[x][y]) {
+        for (let w = 0; w < widthBlockCount; w++) {
+            if (stackedBoard[h][w]) {
                 //해당하는 블럭이 채워져있으면
                 countTrue++; //한줄에있는 블럭개수는늘어난다
                 if (countTrue === widthBlockCount) {
                     countTrue = 0; //이걸 바로해줘야 다음줄에 1칸이비워져있어도 안내려감 이걸밑으로해버리면 밑의 로직을수행하면서 countTrue가 widthBlockCount와 동일하게 되면서 지워진다
-                    // x축이 전부 채워지면 widthBlockCount는 12가 됨
+                    // x축(width)이 전부 채워지면 widthBlockCount는 12가 됨
                     for (let z = 0; z < widthBlockCount; z++) {
-                        //z를 x좌표라고 생각하면 이해할수있음
-                        stackedBoard[z][y] = false; //블럭없엠
-                        for (let j = y; j > 0; j--) {
-                            //j를 y좌표라고 생각하기 y좌표는 클수록 아래 작을수록 위라서 j--로했음
-                            stackedBoard[z][j] = stackedBoard[z][j - 1]; //위에있는 블럭들 다 아래로 끌어옴 -1 인이유는 y축이 아래로 갈수록 증가하기 때문에 위에있는배열은 수가작다
+                        //z를 x좌표(width라고 생각하면 이해할수있음
+                        stackedBoard[h][z] = false; //블럭없엠
+                        for (let j = h; j > 0; j--) {
+                            //j를 y좌표(height)라고 생각하기 y좌표는 클수록 아래 작을수록 위라서 j--로했음
+                            stackedBoard[j][z] = stackedBoard[j-1][z]; //위에있는 블럭들 다 아래로 끌어옴 -1 인이유는 y축이 아래로 갈수록 증가하기 때문에 위에있는배열은 수가작다
                         }
                     }
                     stacked_height = 0; //제일 높이쌓인위치 초기화 인터벌마다 체크해줘서 다시 숫자가 변할것임
@@ -388,9 +388,9 @@ function getBlockScore() {
 
 //제일 높이 쌓여있는 블럭의 높이를 저장하는 함수
 function check_stacked() {
-    for (let x = 0; x < widthBlockCount; x++) {
-        for (let y = 0; y < heightBlockCount; y++) {
-            if (stackedBoard[x][y]) {
+    for (let w = 0; w < widthBlockCount; w++) {
+        for (let h = 0; h < heightBlockCount; h++) {
+            if (stackedBoard[h][w]) {
                 stacked_number++;
             }
         }
