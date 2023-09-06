@@ -147,7 +147,7 @@ function main() {
                 tetrisBoard.length = 0; //배열값삭제
                 tetrisBoardArray(); //배열초기화
                 initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
-                blockIndex.length=0;
+                blockIndex.length=0; //블럭인덱스 내용물다삭제
             }
         }
     }
