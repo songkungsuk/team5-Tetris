@@ -56,7 +56,7 @@ function main() {
     //블럭 7개 중복되지않게 뽑아내기
     makeRandBlockIndex();
     const test = setInterval(function () {
-        
+
         tetrisBoardArray(); //배열초기화
         initCanvas(); //배경덮어씀
         initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
@@ -83,10 +83,12 @@ function main() {
                 for (let i = 0; i < randomBlock[0].length; i++) {  //그자리에있는 블럭의 좌표 뽑아냄
                     let w = randomBlock[rotate_num][i][1] + move_x; // x 좌표
                     let h = randomBlock[rotate_num][i][0] + move_y; // y 좌표
+                    block_w[i] = w;
+                    block_h[i] = h;
                     //바로위에다가 그려야하니까 y-1 // y가 증가할수록 내려감 // 감소할수록 올라감
-                    if(h-1 >= 0) {
-                        if (!(stackedBoard[h-1][w])) {
-                            stackedBoard[h-1][w] = true; // 회색블럭으로 그리는것 
+                    if (h - 1 >= 0) {
+                        if (!(stackedBoard[h - 1][w])) {
+                            stackedBoard[h - 1][w] = true; // 회색블럭으로 그리는것 
                         }
 
                     }
@@ -98,18 +100,8 @@ function main() {
             }
         }
 
-        block_w1 = blockLocationArray_x[0];
-        block_w2 = blockLocationArray_x[1];
-        block_w3 = blockLocationArray_x[2];
-        block_w4 = blockLocationArray_x[3];
-
-        block_h1 = blockLocationArray_y[0];
-        block_h2 = blockLocationArray_y[1];
-        block_h3 = blockLocationArray_y[2];
-        block_h4 = blockLocationArray_y[3];
-
-        console.log(block_w1);
-        console.log(block_h1);
+        console.log(block_w);
+        console.log(block_h);
 
         //x와 y의 최대값 뽑는 것 Min, Max 구하는거
         for (let num = 0; num < blockLocationArray_x.length; num++) {
@@ -158,7 +150,7 @@ function main() {
                 tetrisBoard.length = 0; //배열값삭제
                 tetrisBoardArray(); //배열초기화
                 initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
-                blockIndex.length=0; //블럭인덱스 내용물다삭제
+                blockIndex.length = 0; //블럭인덱스 내용물다삭제
             }
         }
     }

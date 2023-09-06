@@ -32,12 +32,5 @@ let score = 0; //점수
 let stacked_number = 0; // 계산용 변수
 
 //테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요
-let block_w1 = 0;
-let block_w2 = 0;
-let block_w3 = 0;
-let block_w4 = 0;
-
-let block_h1 = 0;
-let block_h2 = 0;
-let block_h3 = 0;
-let block_h4 = 0;
+let block_w = [0,0,0,0];
+let block_h = [0,0,0,0];

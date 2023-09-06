@@ -169,6 +169,7 @@ function handleKeyPress(event) {
                 move_x + controll_ x = 현재 블럭의 x최대 좌표 + 1 또는 -1 의 쌓인 블럭이 있으면 움직이지 못하게 아니면 가능하게
                 move_y + controll_ y = 현재 블럭의 y최대 좌표
                 */
+
                 move_x--; //왼쪽으로갈땐 --
 
 
@@ -183,6 +184,8 @@ function handleKeyPress(event) {
                 move_x + controll_ x = 현재 블럭의 x최대 좌표 + 1 또는 -1 의 쌓인 블럭이 있으면 움직이지 못하게 아니면 가능하게
                 move_y + controll_ y = 현재 블럭의 y최대 좌표
                 */
+
+
                 move_x++; //오른쪽으로갈땐 ++
 
             }
