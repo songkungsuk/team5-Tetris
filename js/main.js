@@ -69,24 +69,22 @@ function main() {
         controll_y = 0; // 높이가 높은 블럭을 내렸을때 맨밑바닥인경우 조절해줌
         blockLocationArray_x = []; //블럭의 x좌표 값들 저장하는배열
         blockLocationArray_y = []; //블럭의 y좌표 값들 저장하는배열
-
+        controll_x_min = 2;
 
         // 블럭을 그릴때마다 체크해야함 블럭이 겹치는지 안겹치는지 - 블럭한개가 닿앗을때
         for (let i = 0; i < randomBlock[0].length; i++) {
             let w = randomBlock[rotate_num][i][1] + move_x; // x 좌표
             let h = randomBlock[rotate_num][i][0] + move_y; // y 좌표
-            block_w[i] = w;
-            block_h[i] = h;
+            block_w[i] = w; //블럭의 현재 좌표 w=x 라고 이해하면편함!
+            block_h[i] = h; //블럭의 현재 좌표 h=y 라고 이해하면편함!
             drawBlock(h, w); //블럭에 있는 좌표들 칠함
             blockLocationArray_x.push(w - move_x); //블럭의오른쪽 최대길이
             blockLocationArray_y.push(h - move_y); //블럭의아래쪽 최대길이
-            
+
             if (stackedBoard[h][w] == tetrisBoard[h][w]) {  //이게 제일중요 그리는거하고 쌓인거하고 겹쳤을때 로직
                 for (let i = 0; i < randomBlock[0].length; i++) {  //그자리에있는 블럭의 좌표 뽑아냄
                     let w = randomBlock[rotate_num][i][1] + move_x; // x 좌표
                     let h = randomBlock[rotate_num][i][0] + move_y; // y 좌표
-                    block_w[i] = w;
-                    block_h[i] = h;
                     //바로위에다가 그려야하니까 y-1 // y가 증가할수록 내려감 // 감소할수록 올라감
                     if (h - 1 >= 0) {
                         if (!(stackedBoard[h - 1][w])) {
@@ -101,10 +99,6 @@ function main() {
                 getRandAndInitMoveY();
             }
         }
-
-        console.log(block_w);
-        console.log(block_h);
-
         //x와 y의 최대값 뽑는 것 Min, Max 구하는거
         for (let num = 0; num < blockLocationArray_x.length; num++) {
             if (controll_x < blockLocationArray_x[num]) { //블록의 오른쪽 최대좌표
@@ -113,12 +107,21 @@ function main() {
             if (controll_y < blockLocationArray_y[num]) { // 블록의 아래 최대 좌표
                 controll_y = blockLocationArray_y[num];
             }
+            if (controll_x_min > blockLocationArray_x[num]) { //블록의 왼쪽 최소 좌표 // 그릴때 왼쪽좌표가 1인경우도있음 ex) ㅡ, ㅣ
+                controll_x_min = blockLocationArray_x[num];
+            }
+
         }
+
+
         // 블럭이 회전햇을때 오른쪽으로 빠져나왔으면 블럭을 왼쪽으로 밀어냄
         if (move_x > widthBlockCount - (controll_x + 1)) {
             move_x -= controll_x - 1;
         }
-
+        // 블럭이 회전햇을때 왼쪽으로 빠져나왔으면 블럭을 오른쪽으로 밀어냄
+        if (move_x < (controll_x_min) && controll_x_min == 0) { 
+            move_x += 1;
+        }
         //-----------------------------------------------------
         drawBlocks(); //이게 쌓인블록과 내가 조종할 블록을 그려주는 함수 funtion.js에 빼놨음 //함수는 싹다 function에 넣어놨어요
         //-----------------------------------------------------

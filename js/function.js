@@ -161,33 +161,34 @@ function chooseNextBlockColor(num) {
 function handleKeyPress(event) {
     switch (event.keyCode) {
         case 37: // Left arrow
-            if (move_x > 0) {
-                //  맨 왼쪽에 닿으면 안 움직이게 하려고
-                //버그 대비해서 그밑에 블럭도 채워져있으면못하게.. 모양에따라 달라지긴하겠지만.. 나중에 해결책을 찾으면 수정
-                //블럭의 좌표를 전부 뽑아낸다음 그변수를 이용해서 전부 하면되는데 배열로하면 이게잘안되니까 결국에는 변수하나하나 만들어서 4개만들고 이짓을 해야된다는것임.. 겁나귀찮네 ㅋㅋ...
-                /*
-                move_x + controll_ x = 현재 블럭의 x최대 좌표 + 1 또는 -1 의 쌓인 블럭이 있으면 움직이지 못하게 아니면 가능하게
-                move_y + controll_ y = 현재 블럭의 y최대 좌표
-                */
+            if (move_x > 0 - controll_x_min) { //블록의 x 최소좌표가 1인경우 왼쪽으로 한번더 밀어줘야함..
+                if (move_x != 0) { // move_x 가 0이 되면 블록의 왼쪽에는 아무것도없어서 실행이안되게됨
+                    for (let i = 0; i < block_h.length; i++) { //블럭개수가 4개이므로 4번반복하겠죠..?
+                        if (stackedBoard[block_h[i]][block_w[i] - 1]) { //블럭의 현재좌표 왼쪽에 쌓인블럭이 있다면?
+                            can_move = false; //움직이지 않는다.
+                        }
+                    }
+                }
 
-                move_x--; //왼쪽으로갈땐 --
+                if (can_move) { //움직일수있으면 ? 움직인다 ..
+                    move_x--; //왼쪽으로갈땐 -- 
+                }
 
-
+                can_move = true; //그리고 다시원래대로 돌림.
             }
             leftKey.style.backgroundColor = '#f0f0f0';
             break;
         case 39: // Right arrow
-            if (move_x < widthBlockCount - (controll_x + 1)) {
-                // 맨 오른쪽에 닿으면 안 움직이게 하려고
-                //버그 대비해서 그밑에 블럭도 채워져있으면못하게.. 모양에따라 달라지긴하겠지만.. 나중에 해결책을 찾으면 수정
-                /*
-                move_x + controll_ x = 현재 블럭의 x최대 좌표 + 1 또는 -1 의 쌓인 블럭이 있으면 움직이지 못하게 아니면 가능하게
-                move_y + controll_ y = 현재 블럭의 y최대 좌표
-                */
-
-
-                move_x++; //오른쪽으로갈땐 ++
-
+            if (move_x < widthBlockCount - (controll_x + 1)) { //블록은 x좌표가 0부터 그리는데 블록의 오른쪽최대좌표가 3이라면  오른쪽 블록 최대개수에서 왼쪽으로 3번떨어져야겠죠 ? 근데 배열은 0부터 시작하니까 블록의 최대좌표가 2일때는 +1해주고! 그려주면 화면을빠져나오지않습니다.
+                for (let i = 0; i < block_h.length; i++) { //블럭개수가 4개이므로 4번반복하겠죠..?
+                    if (stackedBoard[block_h[i]][block_w[i] + 1]) { //블럭의 현재좌표 오른쪽에 쌓인블럭이 있다면?
+                        can_move = false; //움직이지 않는다.
+                    }
+                }
+                if (can_move) { //움직일수있으면 ? 움직인다 ..!
+                    move_x++; //오른쪽으로갈땐 ++
+                }
+                can_move = true; //키이벤트가 끝나면 원래대로 돌려요!
             }
             rightKey.style.backgroundColor = '#f0f0f0';
             break;
