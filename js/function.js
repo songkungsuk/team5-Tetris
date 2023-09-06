@@ -68,12 +68,19 @@ class NextBlock {
 }
 const nextBlockGenerator = new NextBlock();
 let blockIndex = [];
-for (let i = 0; i < 7; i++) { //블럭 7개 중복되지않게 뽑아내기
-    let blockIndexNum = nextBlockGenerator.getNextBlock();
-    if (blockIndex.includes(blockIndexNum)) {
-        i--;
-    } else {
-        blockIndex.push(blockIndexNum);
+//블럭 7개 중복되지않게 뽑아내기
+function makeRandBlockIndex() {
+    //시작하기 버튼을 눌럿을때 해줌
+    if (blockIndex.length == 0) {
+        for (let i = 0; i < 7; i++) { 
+            let blockIndexNum = nextBlockGenerator.getNextBlock();
+            if (blockIndex.includes(blockIndexNum)) {
+                i--;
+            } else {
+                blockIndex.push(blockIndexNum);
+            }
+
+        }
     }
 
 }
@@ -369,7 +376,7 @@ function getBlockScore() {
                         stackedBoard[h][z] = false; //블럭없엠
                         for (let j = h; j > 0; j--) {
                             //j를 y좌표(height)라고 생각하기 y좌표는 클수록 아래 작을수록 위라서 j--로했음
-                            stackedBoard[j][z] = stackedBoard[j-1][z]; //위에있는 블럭들 다 아래로 끌어옴 -1 인이유는 y축이 아래로 갈수록 증가하기 때문에 위에있는배열은 수가작다
+                            stackedBoard[j][z] = stackedBoard[j - 1][z]; //위에있는 블럭들 다 아래로 끌어옴 -1 인이유는 y축이 아래로 갈수록 증가하기 때문에 위에있는배열은 수가작다
                         }
                     }
                     stacked_height = 0; //제일 높이쌓인위치 초기화 인터벌마다 체크해줘서 다시 숫자가 변할것임

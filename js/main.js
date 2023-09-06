@@ -7,6 +7,7 @@ document.addEventListener("keyup", handleKeyUp); //키보드 땟을때 이벤트
 document.addEventListener("keyup", function (e) {
     isUpKeyPressed = false;
 });
+makeRandBlockIndex(); //블럭 7개 중복없이 랜덤생성
 let randomBlock = chooseBlock(blockIndex[0]); //function.js에서 블럭랜덤으로 선택
 //-----------------------------------------------------------------------------------------
 /*
@@ -52,6 +53,8 @@ let randomBlock = chooseBlock(blockIndex[0]); //function.js에서 블럭랜덤�
 //여기가 테트리스 실행부 main.js------------------------------------------------------------
 function main() {
     player.play(bgm);
+    //블럭 7개 중복되지않게 뽑아내기
+    makeRandBlockIndex();
     const test = setInterval(function () {
         
         tetrisBoardArray(); //배열초기화
@@ -144,6 +147,7 @@ function main() {
                 tetrisBoard.length = 0; //배열값삭제
                 tetrisBoardArray(); //배열초기화
                 initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
+                blockIndex.length=0;
             }
         }
     }
