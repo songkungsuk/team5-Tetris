@@ -180,7 +180,7 @@ function handleKeyPress(event) {
             if (move_x < widthBlockCount - (controll_x + 1)) {
                 // 맨 오른쪽에 닿으면 안 움직이게 하려고
                 if(stackedBoard[move_y+controll_y][move_x+controll_x+1] != true
-                || stackedBoard[move_y+controll_y+1][move_x-1] != true){ //버그 대비해서 그밑에 블럭도 채워져있으면못하게.. 모양에따라 달라지긴하겠지만.. 나중에 해결책을 찾으면 수정
+                || stackedBoard[move_y+controll_y+1][move_x+controll_x-1] != true){ //버그 대비해서 그밑에 블럭도 채워져있으면못하게.. 모양에따라 달라지긴하겠지만.. 나중에 해결책을 찾으면 수정
                     /*
                     move_x + controll_ x = 현재 블럭의 x최대 좌표 + 1 또는 -1 의 쌓인 블럭이 있으면 움직이지 못하게 아니면 가능하게
                     move_y + controll_ y = 현재 블럭의 y최대 좌표
