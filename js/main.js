@@ -75,10 +75,12 @@ function main() {
         for (let i = 0; i < randomBlock[0].length; i++) {
             let w = randomBlock[rotate_num][i][1] + move_x; // x 좌표
             let h = randomBlock[rotate_num][i][0] + move_y; // y 좌표
+            block_w[i] = w;
+            block_h[i] = h;
             drawBlock(h, w); //블럭에 있는 좌표들 칠함
             blockLocationArray_x.push(w - move_x); //블럭의오른쪽 최대길이
             blockLocationArray_y.push(h - move_y); //블럭의아래쪽 최대길이
-
+            
             if (stackedBoard[h][w] == tetrisBoard[h][w]) {  //이게 제일중요 그리는거하고 쌓인거하고 겹쳤을때 로직
                 for (let i = 0; i < randomBlock[0].length; i++) {  //그자리에있는 블럭의 좌표 뽑아냄
                     let w = randomBlock[rotate_num][i][1] + move_x; // x 좌표
