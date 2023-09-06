@@ -72,7 +72,7 @@ let blockIndex = [];
 function makeRandBlockIndex() {
     //시작하기 버튼을 눌럿을때 해줌
     if (blockIndex.length == 0) {
-        for (let i = 0; i < 7; i++) { 
+        for (let i = 0; i < 7; i++) {
             let blockIndexNum = nextBlockGenerator.getNextBlock();
             if (blockIndex.includes(blockIndexNum)) {
                 i--;
@@ -163,30 +163,28 @@ function handleKeyPress(event) {
         case 37: // Left arrow
             if (move_x > 0) {
                 //  맨 왼쪽에 닿으면 안 움직이게 하려고
-                if(stackedBoard[move_y+controll_y][move_x-1] != true
-                || stackedBoard[move_y+controll_y+1][move_x-1] != true){ //버그 대비해서 그밑에 블럭도 채워져있으면못하게.. 모양에따라 달라지긴하겠지만.. 나중에 해결책을 찾으면 수정
-                    //블럭의 좌표를 전부 뽑아낸다음 그변수를 이용해서 전부 하면되는데 배열로하면 이게잘안되니까 결국에는 변수하나하나 만들어서 4개만들고 이짓을 해야된다는것임.. 겁나귀찮네 ㅋㅋ...
-                    /*
-                    move_x + controll_ x = 현재 블럭의 x최대 좌표 + 1 또는 -1 의 쌓인 블럭이 있으면 움직이지 못하게 아니면 가능하게
-                    move_y + controll_ y = 현재 블럭의 y최대 좌표
-                    */
-                    move_x--; //왼쪽으로갈땐 --
-                }
-                
+                //버그 대비해서 그밑에 블럭도 채워져있으면못하게.. 모양에따라 달라지긴하겠지만.. 나중에 해결책을 찾으면 수정
+                //블럭의 좌표를 전부 뽑아낸다음 그변수를 이용해서 전부 하면되는데 배열로하면 이게잘안되니까 결국에는 변수하나하나 만들어서 4개만들고 이짓을 해야된다는것임.. 겁나귀찮네 ㅋㅋ...
+                /*
+                move_x + controll_ x = 현재 블럭의 x최대 좌표 + 1 또는 -1 의 쌓인 블럭이 있으면 움직이지 못하게 아니면 가능하게
+                move_y + controll_ y = 현재 블럭의 y최대 좌표
+                */
+                move_x--; //왼쪽으로갈땐 --
+
+
             }
             leftKey.style.backgroundColor = '#f0f0f0';
             break;
         case 39: // Right arrow
             if (move_x < widthBlockCount - (controll_x + 1)) {
                 // 맨 오른쪽에 닿으면 안 움직이게 하려고
-                if(stackedBoard[move_y+controll_y][move_x+controll_x+1] != true
-                || stackedBoard[move_y+controll_y+1][move_x+controll_x-1] != true){ //버그 대비해서 그밑에 블럭도 채워져있으면못하게.. 모양에따라 달라지긴하겠지만.. 나중에 해결책을 찾으면 수정
-                    /*
-                    move_x + controll_ x = 현재 블럭의 x최대 좌표 + 1 또는 -1 의 쌓인 블럭이 있으면 움직이지 못하게 아니면 가능하게
-                    move_y + controll_ y = 현재 블럭의 y최대 좌표
-                    */
-                    move_x++; //오른쪽으로갈땐 ++
-                }
+                //버그 대비해서 그밑에 블럭도 채워져있으면못하게.. 모양에따라 달라지긴하겠지만.. 나중에 해결책을 찾으면 수정
+                /*
+                move_x + controll_ x = 현재 블럭의 x최대 좌표 + 1 또는 -1 의 쌓인 블럭이 있으면 움직이지 못하게 아니면 가능하게
+                move_y + controll_ y = 현재 블럭의 y최대 좌표
+                */
+                move_x++; //오른쪽으로갈땐 ++
+
             }
             rightKey.style.backgroundColor = '#f0f0f0';
             break;

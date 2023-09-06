@@ -98,7 +98,18 @@ function main() {
             }
         }
 
+        block_w1 = blockLocationArray_x[0];
+        block_w2 = blockLocationArray_x[1];
+        block_w3 = blockLocationArray_x[2];
+        block_w4 = blockLocationArray_x[3];
 
+        block_h1 = blockLocationArray_y[0];
+        block_h2 = blockLocationArray_y[1];
+        block_h3 = blockLocationArray_y[2];
+        block_h4 = blockLocationArray_y[3];
+
+        console.log(block_w1);
+        console.log(block_h1);
 
         //x와 y의 최대값 뽑는 것 Min, Max 구하는거
         for (let num = 0; num < blockLocationArray_x.length; num++) {
@@ -152,7 +163,3 @@ function main() {
         }
     }
 }
-
-
-
-
