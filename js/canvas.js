@@ -30,7 +30,7 @@ let blockLocationArray_y = []; //블럭의 y좌표 값들 저장하는배열
 let countTrue = 0; // 테트리스 한줄이 전부 채워졋는지 확인하는 변수
 let score = 0; //점수
 let stacked_number = 0; // 계산용 변수
-let block_w = [0,0,0,0];
-let block_h = [0,0,0,0];
+let block_w = [0,0,0,0]; // 현재 블럭좌표 w
+let block_h = [0,0,0,0]; // 현재 블럭좌표 h
 let can_move = true;
 //테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요
