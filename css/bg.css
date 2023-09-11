@@ -48,10 +48,13 @@ canvas {
     background-color: black;
 }
 
-#score-container {
-    display: flex;
 
+
+
+#random-container {
+    display: flex;
     flex-direction: column;
+
     justify-content: center;
     align-items: center;
     background-color: #333;
@@ -62,10 +65,19 @@ canvas {
 }
 
 
-#random-container {
+#randomblock-container2 {
+    width: 150px;
+    height: 250px;
     display: flex;
-    flex-direction: column;
+    background-color: black;
+    margin-bottom: auto;
+    margin-top: auto;
+}
 
+#score-container {
+    display: flex;
+
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #333;
@@ -84,14 +96,7 @@ canvas {
     margin-top: auto;
 }
 
-#randomblock-container2 {
-    width: 150px;
-    height: 250px;
-    display: flex;
-    background-color: black;
-    margin-bottom: auto;
-    margin-top: auto;
-}
+
 
 .direction-keys {
     display: grid;
