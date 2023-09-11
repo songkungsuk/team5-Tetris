@@ -61,7 +61,30 @@ canvas {
 
 }
 
+
+#random-container {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    border: 1px solid #000000;
+    height: 895px;
+    width: 200px;
+
+}
+
 #block-container {
+    width: 150px;
+    height: 350px;
+    display: flex;
+    background-color: black;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+#randomblock-container2 {
     width: 150px;
     height: 250px;
     display: flex;
