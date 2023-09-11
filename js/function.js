@@ -204,9 +204,16 @@ function handleKeyPress(event) {
                         stackedBoard[h][w] = true;
                     }
                     getRandAndInitMoveY();
-                } else {
-                    move_y++; //내려갈때는 y가 늘어가야되므로 y++
                 }
+                for (let i = 0; i < block_h.length; i++) { //블럭개수가 4개이므로 4번반복하겠죠..?
+                    if (stackedBoard[block_h[i]+2][block_w[i]]) { //블럭의 현재좌표 오른쪽에 쌓인블럭이 있다면?
+                        can_move = false; //움직이지 않는다.
+                    }
+                }
+                if (can_move) { //움직일수있으면 ? 움직인다 ..!
+                    move_y++; //오른쪽으로갈땐 ++
+                }
+                can_move = true; //키이벤트가 끝나면 원래대로 돌려요!
 
             }
             downKey.style.backgroundColor = '#f0f0f0';
