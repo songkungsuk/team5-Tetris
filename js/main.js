@@ -137,9 +137,13 @@ function main() {
             //이건 블럭높이 초기화해주고 랜덤블럭 배열에 밀어넣어주는역할함
             getRandAndInitMoveY();
         }
-        move_y++; //블럭내림
+        if(speedCount == 90){
+            move_y++; //블럭내림
+            speedCount = 0;
+        }
+        speedCount++; //
         tetrisBoard.length = 0; //배열값삭제
-    }, 100); //100 이숫자를 바꾸면 속도가변함
+    }, 1); //100 이숫자를 바꾸면 속도가변함
 
     //맨위의 블럭이 채워졌을경우 게임오버
     function checkGameOverEvent() {
