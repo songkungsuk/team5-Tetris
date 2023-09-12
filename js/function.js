@@ -280,17 +280,16 @@ function handleKeyPress(event) {
             break;
         case 16: // Shift key
             // 블록 저장 기능 추가
-            if(saveBlockIndex == 0){ //처음엔 블럭이 아무것도 없어서
+            if (saveBlockIndex == 0) { //처음엔 블럭이 아무것도 없어서
                 saveBlockIndex = blockIndex[0];
                 blockIndex.shift();
-            }else{
+            } else {
                 //swap 알고리즘 A = saveBlockIndex / B = tmpBlockIndex / C = blockIndex
                 tmpBlockIndex = saveBlockIndex; // A -> B 
                 saveBlockIndex = blockIndex[0]; // C -> A
                 blockIndex[0] = tmpBlockIndex; // B -> C
             }
-            
-
+            player.play(swap);
             break;
         case 32: // Space bar
             // 바로 떨어지게 하기 기능 추가
@@ -392,7 +391,14 @@ function drawNextBlock() {
     for (let h = 0; h < nextheightBlockCount; h++) {
         for (let w = 0; w < nextwidthBlockCount; w++) {
             if (nextBlockBoard[h][w]) {
-                nextBlockContext.fillRect(nextBoarderWidth * h + nextBlocksize * h, nextBoarderWidth * w + nextBlocksize * w, nextBlocksize, nextBlocksize);
+                if (blockIndex[1] == 1) {
+                    nextBlockContext.fillRect(nextBoarderWidth * h + nextBlocksize * h - 5, nextBoarderWidth * w + nextBlocksize * w - 10, nextBlocksize, nextBlocksize);
+                } else if (blockIndex[1] == 4) {
+                    nextBlockContext.fillRect(nextBoarderWidth * h + nextBlocksize * h - 8, nextBoarderWidth * w + nextBlocksize * w - 2, nextBlocksize, nextBlocksize);
+                } else {
+                    nextBlockContext.fillRect(nextBoarderWidth * h + nextBlocksize * h, nextBoarderWidth * w + nextBlocksize * w, nextBlocksize, nextBlocksize);
+                }
+
             }
         }
     }
@@ -435,7 +441,14 @@ function drawNextBlock2() {
     for (let h = 0; h < nextheightBlockCount2; h++) {
         for (let w = 0; w < nextwidthBlockCount2; w++) {
             if (nextBlockBoard2[h][w]) {
-                nextBlockContext2.fillRect(nextBoarderWidth2 * h + nextBlocksize2 * h, nextBoarderWidth2 * w + nextBlocksize2 * w, nextBlocksize2, nextBlocksize2);
+                if (blockIndex[2] == 1) {
+                    nextBlockContext2.fillRect(nextBoarderWidth2 * h + nextBlocksize2 * h - 5, nextBoarderWidth2 * w + nextBlocksize2 * w - 10, nextBlocksize2, nextBlocksize2);
+                } else if (blockIndex[2] == 4) {
+                    nextBlockContext2.fillRect(nextBoarderWidth2 * h + nextBlocksize2 * h - 8, nextBoarderWidth2 * w + nextBlocksize2 * w - 3, nextBlocksize2, nextBlocksize2);
+                } else {
+                    nextBlockContext2.fillRect(nextBoarderWidth2 * h + nextBlocksize2 * h, nextBoarderWidth2 * w + nextBlocksize2 * w, nextBlocksize2, nextBlocksize2);
+                }
+
             }
         }
     }
@@ -479,7 +492,14 @@ function drawSaveBlock() {
     for (let h = 0; h < saveheightBlockCount; h++) {
         for (let w = 0; w < savewidthBlockCount; w++) {
             if (saveBlockBoard[h][w]) {
-                saveBlockContext.fillRect(saveBoarderWidth * h + saveBlocksize * h+ 35, saveBoarderWidth * w + saveBlocksize * w + 80, saveBlocksize, saveBlocksize);
+                if (saveBlockIndex == 1) {
+                    saveBlockContext.fillRect(saveBoarderWidth * h + saveBlocksize * h + 20, saveBoarderWidth * w + saveBlocksize * w + 80, saveBlocksize, saveBlocksize);
+                } else if (saveBlockIndex == 4) {
+                    saveBlockContext.fillRect(saveBoarderWidth * h + saveBlocksize * h + 50, saveBoarderWidth * w + saveBlocksize * w + 80, saveBlocksize, saveBlocksize);
+                } else {
+                    saveBlockContext.fillRect(saveBoarderWidth * h + saveBlocksize * h + 35, saveBoarderWidth * w + saveBlocksize * w + 80, saveBlocksize, saveBlocksize);
+                }
+
             }
         }
     }
@@ -494,7 +514,7 @@ function drawSaveBlockOne(x, y) {
 }
 //저장한 블럭보여주기
 function showSaveBlock() {
-    if(saveBlockIndex != 0){
+    if (saveBlockIndex != 0) {
         for (let i = 0; i < chooseBlock(blockIndex[1]).length; i++) {
             let x = chooseBlock(saveBlockIndex)[0][i][0]; // x 좌표
             let y = chooseBlock(saveBlockIndex)[0][i][1]; // y 좌표
