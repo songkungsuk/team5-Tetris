@@ -62,7 +62,11 @@ function main() {
         initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
         showNextBlock(); // 다음블럭보여줌
         initNextBlockCanvas2(); // 블럭미리보여주는곳 검은색으로 칠함
-        showNextBlock2() // 다다음블럭보여줌
+        showNextBlock2(); // 다다음블럭보여줌
+
+        initSaveBlockCanvas();
+        showSaveBlock();
+
         getBlockScore(); //블럭이 한줄이 채워져있는지 확인하기 채워졌으면 지움
         check_stacked(); ////제일 높이 쌓여있는 블럭의 높이를 저장하는 함수
         checkGameOverEvent(); // 맨위 블럭이 쌓이면 게임오버
@@ -142,7 +146,7 @@ function main() {
         speedControll();
         speedCount++; //
         tetrisBoard.length = 0; //배열값삭제
-    }, 1); //100 이숫자를 바꾸면 속도가변함
+    }, 1); //숫자 건들지마시오.
 
     //맨위의 블럭이 채워졌을경우 게임오버
     function checkGameOverEvent() {
@@ -159,6 +163,7 @@ function main() {
                 tetrisBoardArray(); //배열초기화
                 initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
                 initNextBlockCanvas2();// 블럭미리보여주는곳 검은색으로 칠함
+                initSaveBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
                 blockIndex.length = 0; //블럭인덱스 내용물다삭제
             }
         }

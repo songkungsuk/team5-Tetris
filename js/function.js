@@ -54,11 +54,22 @@ function nextBlockBoardArray2() {
     }
 }
 
+function saveBlockBoardArray() {
+    // 세로 20칸, 가로 6칸 테트리스 배열
+    for (let height = 0; height < 20; height++) {
+        saveBlockBoard[height] = [];
+        for (let width = 0; width < 10; width++) {
+            saveBlockBoard[height][width] = false; // 아직 아무것도 쌓인게 없어서 false
+        }
+    }
+}
+
 // 배열생성
 tetrisBoardArray();
 stackedBoardArray();
 nextBlockBoardArray();
 nextBlockBoardArray2();
+saveBlockBoardArray();
 
 // 방식(Math)
 function getRandomBlockIndex() {
