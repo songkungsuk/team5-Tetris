@@ -57,6 +57,8 @@ const savewidthBlockCount = 5;
 const saveheightBlockCount = 15;
 saveBlockCanvas.width = 150;
 saveBlockCanvas.height = 250;
+let saveBlockIndex = 0; // 저장블럭
+let tmpBlockIndex = 0; //임시블럭
 
 //다음 블럭 보여주는것
 function initSaveBlockCanvas() {
@@ -71,7 +73,7 @@ function initSaveBlockCanvas() {
 }
 //다음에 보여줄 블력 그리기
 function drawSaveBlock() {
-    chooseSaveBlockColor(blockIndex[1]);
+    chooseSaveBlockColor(saveBlockIndex);
 
     for (let h = 0; h < saveheightBlockCount; h++) {
         for (let w = 0; w < savewidthBlockCount; w++) {
