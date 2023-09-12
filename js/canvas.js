@@ -1,13 +1,27 @@
 //--------------------------------------블럭미리보여주는곳 -----------------------------------------------
 const nextBlockCanvas = document.getElementById("block-container"); //블럭 미리보여줄것
 const nextBlockContext = nextBlockCanvas.getContext("2d"); // //캔버스 그리는거 타입
-const nextBoarderWidth = 1;
-const nextBlocksize = 16;
-const nextwidthBlockCount = 6;
-const nextheightBlockCount = 20;
-nextBlockCanvas.width = 100;
-//-------------------------------------------------------------------------------------------------------
+const nextBoarderWidth = 2;
+const nextBlocksize = 25;
+const nextwidthBlockCount = 5;
+const nextheightBlockCount = 15;
+nextBlockCanvas.width = 150;
+nextBlockCanvas.height = 150;
 
+const nextBlockCanvas2 = document.getElementById("block-container2"); //블럭 미리보여줄것 다다음
+const nextBlockContext2 = nextBlockCanvas2.getContext("2d"); // //캔버스 그리는거 타입
+const nextBoarderWidth2 = 2;
+const nextBlocksize2 = 25;
+const nextwidthBlockCount2 = 5;
+const nextheightBlockCount2 = 15;
+nextBlockCanvas2.width = 150;
+nextBlockCanvas2.height = 150;
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+const saveblockCanvas = document.getElementById("saveblock-container");
+const saveBlockContext = saveblockCanvas.getContext("2d");
+
+//-------------------------------------------------------------------------------------------------------
 // -------------------------------------블럭떨어지는곳 --------------------------------------------------
 const canvas = document.getElementById("tetrisCanvas"); //캔버스 객체 자체
 const context = canvas.getContext("2d"); //캔버스 그리는거 타입
@@ -34,4 +48,5 @@ let block_w = [0,0,0,0]; // 현재 블럭좌표 w
 let block_h = [0,0,0,0]; // 현재 블럭좌표 h
 let can_move = true;
 let speedCount = 0;
+let upkeyCount = 0;
 //테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요

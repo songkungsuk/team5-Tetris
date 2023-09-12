@@ -14,12 +14,10 @@
     <!-- 게임 요소를 감싸는 메인 컨테이너 -->
     <div class="container" id="canvas-container">
       <!-- Tetris 게임 캔버스를 포함하는 컨테이너 -->
-
-
-      <div class="container" id="random-container">
+      <div class="container" id="left-container">
         <!-- 설명문 -->
         <h2>Team5 </h2>
-        <canvas class="container" id="randomblock-container2"></canvas>
+        <canvas class="container" id="saveblock-container"></canvas>
         <div>
           <h2>키 설명</h2>
         </div>
@@ -35,12 +33,15 @@
           <p>바로 내려가는 키</p>
         </div>
       </div>
-
+      <!-- 가운데 -->
       <canvas id="tetrisCanvas"></canvas>
-      <div class="container" id="score-container">
-        <!-- 설명문 -->
+      <!-- 오른쪽 -->
+      <div class="container" id="right-container">
         <!-- 점수 및 캔버스를 포함하는 컨테이너 -->
+        <h3>Next Block_1</h3>
         <canvas class="container" id="block-container"></canvas>
+        <h3>Next Block_2</h3>
+        <canvas class="container" id="block-container2"></canvas>
         <h2>Score</h2>
         <!-- "Score" 텍스트 헤더 (하얀색) -->
         <h2 id="score">0</h2>

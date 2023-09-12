@@ -5,15 +5,21 @@ body {
     height: 50vh;
     margin: 0;
     margin-top: 12%;
-    /*  background-image: url("img/space.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    ???????????????????????????
-    */
     background-color: #f0f0f0;
+    /*드래그방지*/
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 h2 {
+    color: #f0f0f0;
+
+    vertical-align: top
+}
+
+h3 {
     color: #f0f0f0;
 
     vertical-align: top
@@ -51,7 +57,7 @@ canvas {
 
 
 
-#random-container {
+#left-container {
     display: flex;
     flex-direction: column;
 
@@ -65,7 +71,7 @@ canvas {
 }
 
 
-#randomblock-container2 {
+#saveblock-container {
     width: 150px;
     height: 250px;
     display: flex;
@@ -74,7 +80,7 @@ canvas {
     margin-top: auto;
 }
 
-#score-container {
+#right-container {
     display: flex;
 
     flex-direction: column;
@@ -88,8 +94,17 @@ canvas {
 }
 
 #block-container {
-    width: 150px;
-    height: 350px;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    background-color: black;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+#block-container2 {
+    width: 140px;
+    height: 140px;
     display: flex;
     background-color: black;
     margin-bottom: auto;
