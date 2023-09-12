@@ -18,8 +18,7 @@ nextBlockCanvas2.width = 150;
 nextBlockCanvas2.height = 150;
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------
-const saveblockCanvas = document.getElementById("saveblock-container");
-const saveBlockContext = saveblockCanvas.getContext("2d");
+
 
 //-------------------------------------------------------------------------------------------------------
 // -------------------------------------블럭떨어지는곳 --------------------------------------------------
@@ -50,3 +49,31 @@ let can_move = true;
 let speedCount = 0;
 let upkeyCount = 0;
 //테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요
+const saveblockCanvas = document.getElementById("saveblock-container");
+const saveBlockContext = saveblockCanvas.getContext("2d");
+saveblockCanvas.width = 150;
+saveblockCanvas.height = 250;
+
+function initsaveblockCanvas() {
+    // 배경 그리기
+    nextBlockContext2.fillStyle = "black"; //캔버스 블럭 색깔 종류
+    for (let h = 0; h < nextheightBlockCount2; h++) {
+        //가로세로 블럭수만큼 캔버스에 블럭그려넣기
+        for (let w = 0; w < nextwidthBlockCount2; w++) {
+            nextBlockContext2.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+}
+
+//수정중
+function drawSaveBlock() {
+    chooseNextBlockColor2(blockIndex[2]);
+
+    for (let h = 0; h < nextheightBlockCount2; h++) {
+        for (let w = 0; w < nextwidthBlockCount2; w++) {
+            if (nextBlockBoard2[h][w]) {
+                nextBlockContext2.fillRect(nextBoarderWidth2 * h + nextBlocksize2 * h, nextBoarderWidth2 * w + nextBlocksize2 * w, nextBlocksize2, nextBlocksize2);
+            }
+        }
+    }
+}
