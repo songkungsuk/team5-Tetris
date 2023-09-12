@@ -57,3 +57,4 @@ let upkeyCount = 0;
 let saveBlockIndex = 0; // 저장블럭
 let tmpBlockIndex = 0; //임시블럭
 //테스트용------------------------------------------------이거 한눈에볼라고 일단 여기다 적어놨어요 나중에 정리할게요
+let speedUp = 0;
