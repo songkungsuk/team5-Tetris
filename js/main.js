@@ -8,7 +8,7 @@ document.addEventListener("keyup", function (e) {
     isUpKeyPressed = false;
 });
 makeRandBlockIndex(); //블럭 7개 중복없이 랜덤생성
-let randomBlock = chooseBlock(blockIndex[0]); //function.js에서 블럭랜덤으로 선택
+
 //-----------------------------------------------------------------------------------------
 /*
     -간단한 구조설명-
@@ -56,17 +56,15 @@ function main() {
     //블럭 7개 중복되지않게 뽑아내기
     makeRandBlockIndex();
     const test = setInterval(function () {
-
+        let randomBlock = chooseBlock(blockIndex[0]); //function.js에서 블럭랜덤으로 선택
         tetrisBoardArray(); //배열초기화
         initCanvas(); //배경덮어씀
         initNextBlockCanvas(); // 블럭미리보여주는곳 검은색으로 칠함
         showNextBlock(); // 다음블럭보여줌
         initNextBlockCanvas2(); // 블럭미리보여주는곳 검은색으로 칠함
         showNextBlock2(); // 다다음블럭보여줌
-
-        initSaveBlockCanvas();
-        showSaveBlock();
-
+        initSaveBlockCanvas(); //저장한 블럭 보여주는곳 초기화
+        showSaveBlock(); //저장한 블럭 보여주는곳
         getBlockScore(); //블럭이 한줄이 채워져있는지 확인하기 채워졌으면 지움
         check_stacked(); ////제일 높이 쌓여있는 블럭의 높이를 저장하는 함수
         checkGameOverEvent(); // 맨위 블럭이 쌓이면 게임오버

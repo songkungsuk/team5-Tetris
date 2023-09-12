@@ -280,6 +280,17 @@ function handleKeyPress(event) {
             break;
         case 16: // Shift key
             // 블록 저장 기능 추가
+            if(saveBlockIndex == 0){ //처음엔 블럭이 아무것도 없어서
+                saveBlockIndex = blockIndex[0];
+                blockIndex.shift();
+            }else{
+                //swap 알고리즘 A = saveBlockIndex / B = tmpBlockIndex / C = blockIndex
+                tmpBlockIndex = saveBlockIndex; // A -> B 
+                saveBlockIndex = blockIndex[0]; // C -> A
+                blockIndex[0] = tmpBlockIndex; // B -> C
+            }
+            
+
             break;
         case 32: // Space bar
             // 바로 떨어지게 하기 기능 추가
@@ -447,6 +458,81 @@ function showNextBlock2() {
     drawNextBlock2();
     nextBlockBoard2.length = 0;
     nextBlockBoardArray2();
+}
+//---------------------------------------------블럭 저장하는곳-------------------------------------------------
+
+//저장한 블럭 보여주는것
+function initSaveBlockCanvas() {
+    // 배경 그리기
+    saveBlockContext.fillStyle = "black"; //캔버스 블럭 색깔 종류
+    for (let h = 0; h < saveheightBlockCount; h++) {
+        //가로세로 블럭수만큼 캔버스에 블럭그려넣기
+        for (let w = 0; w < savewidthBlockCount; w++) {
+            saveBlockContext.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+}
+//저장한 보여줄 블력 그리기
+function drawSaveBlock() {
+    chooseSaveBlockColor(saveBlockIndex);
+
+    for (let h = 0; h < saveheightBlockCount; h++) {
+        for (let w = 0; w < savewidthBlockCount; w++) {
+            if (saveBlockBoard[h][w]) {
+                saveBlockContext.fillRect(saveBoarderWidth * h + saveBlocksize * h+ 35, saveBoarderWidth * w + saveBlocksize * w + 80, saveBlocksize, saveBlocksize);
+            }
+        }
+    }
+}
+//저장한 블력그리기
+function drawSaveBlockOne(x, y) {
+    if (saveBlockIndex == 4) {
+        saveBlockBoard[x][y] = true; //ㅁ 모양일때 가운데로 안가가지고 이렇게했습니다
+    } else {
+        saveBlockBoard[x][y] = true; // 그외는 다이렇게 무지성 하드코딩;;
+    }
+}
+//저장한 블럭보여주기
+function showSaveBlock() {
+    if(saveBlockIndex != 0){
+        for (let i = 0; i < chooseBlock(blockIndex[1]).length; i++) {
+            let x = chooseBlock(saveBlockIndex)[0][i][0]; // x 좌표
+            let y = chooseBlock(saveBlockIndex)[0][i][1]; // y 좌표
+            drawSaveBlockOne(x, y);
+        }
+    }
+    drawSaveBlock();
+    saveBlockBoard.length = 0;
+    saveBlockBoardArray();
+}
+//블럭색깔
+function chooseSaveBlockColor(num) {
+    switch (num) {
+        case 0:
+            saveBlockContext.fillStyle = '#black';
+            break;
+        case 1:
+            saveBlockContext.fillStyle = '#a2ddf3';
+            break;
+        case 2:
+            saveBlockContext.fillStyle = '#f3a2ca';
+            break;
+        case 3:
+            saveBlockContext.fillStyle = '#a2f3db';
+            break;
+        case 4:
+            saveBlockContext.fillStyle = '#56a6ff';
+            break;
+        case 5:
+            saveBlockContext.fillStyle = '#f3c8a2';
+            break;
+        case 6:
+            saveBlockContext.fillStyle = '#eaa2f3';
+            break;
+        case 7:
+            saveBlockContext.fillStyle = '#a2a6f3';
+            break;
+    }
 }
 //-------------------------------------------------------------------------------------------------
 //블럭 인덱스 배열에 미리 넣어주면서 새로 나올블록도 나오게 해줌 
