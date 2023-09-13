@@ -632,9 +632,28 @@ function speedControll() {
     }
 }
 
-// 점수가 만점 오를때마다 speedUp 
+// 점수가 5000점 오를때마다 speedUp 
 function scoreCheck(){
-    if(score >= 1000 && speedUp < 50){
-        speedUp = (score/10000)*10;
+    if(score >= 5000 && speedUp < 50){
+        let s = Math.floor(score/5000);
+        speedUp = s *10;
+    }
+}
+
+// 특정점수가 되면 음악을 바꿈
+function bgmChange(){
+    if((score%30000) == 10000){
+        player._stop(bgm);
+        player.play(bgm2);
+    }
+
+    if((score%30000) == 20000){
+        player._stop(bgm2);
+        player.play(bgm3);
+    }
+
+    if((score%30000) == 0){
+        player._stop(bgm3);
+        player.play(bgm);
     }
 }
